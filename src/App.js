@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Register from './authComponents/register'
+import RegisterAndLogin from './authComponents/registerAndLogin'
 
 class App extends React.Component {
 	constructor() {
@@ -26,7 +26,7 @@ class App extends React.Component {
 	render() {
   		return (
 			<div className="App">
-				<Register setActiveUserAndLogged={this.setActiveUserAndLogged}/>
+				<RegisterAndLogin setActiveUserAndLogged={this.setActiveUserAndLogged}/>
 		  		<h2>hello world</h2>
 			</div>
   		);
