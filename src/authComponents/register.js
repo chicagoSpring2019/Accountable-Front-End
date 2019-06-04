@@ -4,13 +4,20 @@ class Register extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			username: '',
+			email: '',
 			password: '',
 		}
 	}
 
 	handleChange = (e) => {
     	this.setState({[e.target.name]: e.target.value});
+  	}
+
+  	clearForm = () => {
+		this.setState({
+			email: '',
+			password: '',
+		})
   	}
 
   	handleRegister = async (e) => {
@@ -25,6 +32,7 @@ class Register extends React.Component {
     	      		'Content-Type': 'application/json'
     	    	}
     	  	})
+    	  	this.clearForm();
     	  	console.log(registerResponse, "<<== registerResponse");
     	  	const parsedResponse = await registerResponse.json();
     	  	console.log(parsedResponse, "<----  parsedResponse");
@@ -41,11 +49,11 @@ class Register extends React.Component {
   		return (
   			<div>
             	<h3 >Register </h3>
-            	<form onSubmit={this.handleRegister}>
+            	<form id="register-form" onSubmit={this.handleRegister}>
             	    Email:
-            	    <input type='text' name='email' onChange={this.handleChange}/>
+            	    <input type='text' name='email' value={this.state.email} onChange={this.handleChange}/>
             	    Password:
-            	    <input type='password' name='password' onChange={this.handleChange}/>
+            	    <input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
             	    <button type='sumbit'>Register</button>
             	</form>
         	</div>
