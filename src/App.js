@@ -11,7 +11,7 @@ class App extends React.Component {
 		}
 	}
 
-	setActiveUserAndLogged = (email)	=>	{
+	setActiveUserAndLogged = (email) =>	{
 		console.log(email, "<<< the submitted email address in setActiveUser");
 		try {
 			this.setState({
@@ -23,10 +23,32 @@ class App extends React.Component {
 		}
 	}
 
+	logOutFunction = async () => {
+		console.log("--Log out has been initiated--");
+		try {
+			const logOutResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/logout')
+			console.log(logOutResponse, "<<< logOutResponse <<<");
+			this.setState({
+				activeUser: null,
+				logged: false,
+			})
+		} catch(err) {
+			console.log(err);
+		}
+	}
+
 	render() {
+		const LogOut = (
+			<div>
+				<button onClick={this.logOutFunction}> Log out </button>
+			</div>
+		)
+
   		return (
 			<div className="App">
-				<RegisterAndLogin setActiveUserAndLogged={this.setActiveUserAndLogged}/>
+
+				{this.state.logged ? LogOut : <RegisterAndLogin setActiveUserAndLogged={this.setActiveUserAndLogged}/> }
+
 		  		<h2>hello world</h2>
 			</div>
   		);

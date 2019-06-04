@@ -22,12 +22,14 @@ class RegisterAndLogin extends React.Component {
 	}
 
 	showRegisterForm = () => {
+		this.clearForm();
 		this.setState({
 			showRegister: true
 		})
 	}
 
 	hideRegisterForm = () => {
+		this.clearForm();
 		this.setState({
 			showRegister: false
 		})
