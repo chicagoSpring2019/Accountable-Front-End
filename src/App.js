@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import RegisterAndLogin from './authComponents/registerAndLogin'
+import CategoryList from './Categories/categoryList'
+import Expenses from './Expenses/expenses'
 
 class App extends React.Component {
 	constructor() {
@@ -9,9 +11,19 @@ class App extends React.Component {
 			logged: false,
 			activeUserEmail: null,
 			activeUserId: null,
+			categories: [],
+			expenses: [],
 		}
 	}
-
+	componentDidMount() {
+		this.retrieveExpensesAndCategories().then(categories => {
+			if(this.logged) {
+				this.setState({
+					categories: [...categories]
+				})
+			}
+		})
+	}
 	setActiveUserEmailAndLogged = (email) =>	{
 		console.log(email, "<<< the submitted email address in setActiveUser");
 		try {
@@ -44,8 +56,12 @@ class App extends React.Component {
 			const categoryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'category/user/' + this.state.activeUserId)
 			const parsedExpenseResponse = await expenseResponse.json();
 			const parsedCategoryResponse = await categoryResponse.json();
-			console.log(parsedCategoryResponse,"<+++ parsedCategoryResponse");
-			console.log(parsedExpenseResponse, "<======= parsedExpenseResponse");
+			console.log(parsedCategoryResponse.data,"<+++ parsedCategoryResponse");
+			console.log(parsedExpenseResponse.data, "<======= parsedExpenseResponse");
+			this.setState({
+				categories: parsedCategoryResponse.data,
+				expenses: parsedExpenseResponse.data
+			})
 		} catch(err) {
 			console.log(err);
 		}
@@ -60,6 +76,8 @@ class App extends React.Component {
 				activeUserEmail: null,
 				activeUserId: null,				
 				logged: false,
+				categories: [],
+				expenses: [],
 			})
 		} catch(err) {
 			console.log(err);
@@ -73,12 +91,15 @@ class App extends React.Component {
 			</div>
 		)
 
+
   		return (
 			<div className="App">
 
 				{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUserEmailAndLogged={this.setActiveUserEmailAndLogged} setActiveUserId={this.setActiveUserId} /> }
 
 		  		<h2>hello world</h2>
+		  		<CategoryList categories={this.state.categories} />
+		  		<Expenses expenses={this.state.expenses} />
 			</div>
   		);
   	}
