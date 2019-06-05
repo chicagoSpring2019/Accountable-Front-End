@@ -39,10 +39,17 @@ class RegisterAndLogin extends React.Component {
 		e.preventDefault();
 		console.log('--handleLogin() initiated--');
 		try {
+
+			const bodyToSend = {
+				email: this.state.email,
+				password: this.state.password
+			}
+
 		  	const loginResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/login', {
 				method: 'POST',
 				credentials: 'include',
-				body: JSON.stringify(this.state),
+				/// FIND out how to only select unique pieces of state
+				body: JSON.stringify(bodyToSend),
 				headers: {
 				  	'Content-Type': 'application/json'
 				}
@@ -53,7 +60,9 @@ class RegisterAndLogin extends React.Component {
 		  	console.log(parsedResponse, "<=-=-= parsedResponse");
 		  	if(parsedResponse.status === 200) {
 				console.log(parsedResponse.data, '<<< parsedResponse.data in handleLogin()');
-				this.props.setActiveUserAndLogged(parsedResponse.data.email);
+				this.props.setActiveUserEmailAndLogged(parsedResponse.data.email);
+				this.props.setActiveUserId(parsedResponse.data._id);
+
 		  	}
 		} catch(err) {
 		  	console.log(err);
@@ -76,13 +85,33 @@ class RegisterAndLogin extends React.Component {
 			console.log(registerResponse, "<<== registerResponse");
 			const parsedResponse = await registerResponse.json();
 			console.log(parsedResponse, "<----  parsedResponse");
-			if(parsedResponse.status === 200){
+			if(parsedResponse.status === 200) {
 				console.log(parsedResponse.data, '<<< parsedResponse.data in handleRegister()');
-				this.props.setActiveUserAndLogged(parsedResponse.data.email);
+				this.createDefaultCats(parsedResponse.data._id);
+				this.props.setActiveUserEmailAndLogged(parsedResponse.data.email);
+				this.props.setActiveUserId(parsedResponse.data._id);
 			}
 		} catch (err) {
 			console.log(err);
 		}
+	}
+
+	createDefaultCats = async (id) => {
+		console.log("--Default category creation has been initiated--");
+		const catName = {
+			name: "Eating out"
+		}
+		const eatingOutResponse = await fetch(process.env.REACT_APP_BACKEND_URL + "category/user/" + id, {
+			method: 'POST',
+			credentials: 'include',
+			body: JSON.stringify(catName),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		console.log(eatingOutResponse, "<<+= eatingOutResponse");
+		const parsedEatingOutResponse = eatingOutResponse.json()
+		console.log(parsedEatingOutResponse, "<<<< parsedEatingOutResponse");
 	}
 
 	render() {
@@ -97,7 +126,7 @@ class RegisterAndLogin extends React.Component {
 					<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
 					<button type='sumbit'> Log in </button>
 				</form>
-				<p> Dont't have an account? Set one up now! It's free and easy. </p>
+				<p> Don't have an account? Set one up now! It's free and easy. </p>
 				<button onClick={this.showRegisterForm}> Sign up </button>
 			</div>
 		)
@@ -112,7 +141,7 @@ class RegisterAndLogin extends React.Component {
 					<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
 					<button type='sumbit'>Register</button>
 				</form>
-				<p> You have an account after all? With a memory like that, you really do need this app! </p>
+				<p> You have an account after all? </p>
 				<button onClick={this.hideRegisterForm}> Login </button>
 			</div>
 		)
@@ -123,7 +152,6 @@ class RegisterAndLogin extends React.Component {
 			</div>
 		);
 	}
-
 }
 
 
