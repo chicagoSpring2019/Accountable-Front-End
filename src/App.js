@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import RegisterAndLogin from './authComponents/registerAndLogin'
-import CategoryList from './Categories/categoryList'
-import Expenses from './Expenses/expenses'
+import RegisterAndLogin from './RegisterAndLogin/index'
+import CategoryList from './CategoryList/index'
+import Expenses from './Expenses/index'
 
 class App extends React.Component {
 	constructor() {
@@ -97,9 +97,9 @@ class App extends React.Component {
 
 				{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUserEmailAndLogged={this.setActiveUserEmailAndLogged} setActiveUserId={this.setActiveUserId} /> }
 
-		  		<h2>hello world</h2>
-		  		<CategoryList categories={this.state.categories} />
-		  		<Expenses expenses={this.state.expenses} />
+		  		<h1> - ACCOUNTABLE -</h1>
+		  		{ this.state.logged ? <CategoryList categories={this.state.categories} /> : <> </> }
+		  		{ this.state.logged ? <Expenses expenses={this.state.expenses} /> : <> </> }
 			</div>
   		);
   	}

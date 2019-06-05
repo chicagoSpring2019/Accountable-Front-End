@@ -48,7 +48,6 @@ class RegisterAndLogin extends React.Component {
 		  	const loginResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/login', {
 				method: 'POST',
 				credentials: 'include',
-				/// FIND out how to only select unique pieces of state
 				body: JSON.stringify(bodyToSend),
 				headers: {
 				  	'Content-Type': 'application/json'
@@ -86,7 +85,7 @@ class RegisterAndLogin extends React.Component {
 			console.log(parsedResponse, "<----  parsedResponse");
 			if(parsedResponse.status === 200) {
 				console.log(parsedResponse.data, '<<< parsedResponse.data in handleRegister()');
-				this.createDefaultCats(parsedResponse.data._id);
+				await this.createDefaultCats(parsedResponse.data._id);
 				this.props.setActiveUserEmailAndLogged(parsedResponse.data.email);
 				this.props.setActiveUserId(parsedResponse.data._id);
 			}
@@ -96,52 +95,61 @@ class RegisterAndLogin extends React.Component {
 	}
 
 	createDefaultCats = async (id) => {
-		console.log("--Default category creation has been initiated--");
+		// console.log("--Default category creation has been initiated--");
 
-		const catName1 = {
+		// const catName1 = {
+		// 	name: "Eating out"
+		// }
+		// const eatingOutResponse = await fetch(process.env.REACT_APP_BACKEND_URL + "category/user/" + id, {
+		// 	method: 'POST',
+		// 	credentials: 'include',
+		// 	body: JSON.stringify(catName1),
+		// 	headers: {
+		// 		'Content-Type': 'application/json'
+		// 	}
+		// })
+
+		// const catName2 = {
+		// 	name: "Groceries"
+		// }
+		const cats = [{
+			name: 'Groceries'
+		}, {
 			name: "Eating out"
-		}
-		const eatingOutResponse = await fetch(process.env.REACT_APP_BACKEND_URL + "category/user/" + id, {
-			method: 'POST',
-			credentials: 'include',
-			body: JSON.stringify(catName1),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-
-		const catName2 = {
-			name: "Groceries"
-		}
+		}, {
+			name: "Gasoline"
+		}]
 		const GroceriesResponse = await fetch(process.env.REACT_APP_BACKEND_URL + "category/user/" + id, {
 			method: 'POST',
 			credentials: 'include',
-			body: JSON.stringify(catName2),
+			body: JSON.stringify(cats),
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		})
 
-		const catName3 = {
-			name: "Gasoline"
-		}
-		const GasolineResponse = await fetch(process.env.REACT_APP_BACKEND_URL + "category/user/" + id, {
-			method: 'POST',
-			credentials: 'include',
-			body: JSON.stringify(catName3),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
+		// const catName3 = {
+		// 	name: "Gasoline"
+		// }
+		// const GasolineResponse = await fetch(process.env.REACT_APP_BACKEND_URL + "category/user/" + id, {
+		// 	method: 'POST',
+		// 	credentials: 'include',
+		// 	body: JSON.stringify(catName3),
+		// 	headers: {
+		// 		'Content-Type': 'application/json'
+		// 	}
+		// })
 
-		const parsedEatingOutResponse = await eatingOutResponse.json()
-		console.log(parsedEatingOutResponse, "<<<< parsedEatingOutResponse");
+		// const parsedEatingOutResponse = await eatingOutResponse.json()
+		// console.log(parsedEatingOutResponse, "<<<< parsedEatingOutResponse");
 		const parsedGroceriesResponse = await GroceriesResponse.json()
 		console.log(parsedGroceriesResponse, "<<<< parsedGroceries");
-		const parsedGasolineResponse = await GasolineResponse.json()
-		console.log(parsedGasolineResponse, "<<<< parsedGasolineResponse");	
+		// const parsedGasolineResponse = await GasolineResponse.json()
+		// console.log(parsedGasolineResponse, "<<<< parsedGasolineResponse");	
 
-		}
+
+
+	}
 
 	render() {
 
