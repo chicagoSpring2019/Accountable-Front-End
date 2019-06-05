@@ -16,6 +16,7 @@ class Expenses extends React.Component {
 
 	handleSelectChange = (e) => {
 		this.setState({category: e.target.value});
+		console.log(e.target.value, "<<e.target.value<<");
 	}
 
 
@@ -62,7 +63,7 @@ class Expenses extends React.Component {
 		return (
 			<div>
 				<h4> Expense Log </h4>
-				
+				{}
 				<ul>
 					{expenseLog}
 				</ul>

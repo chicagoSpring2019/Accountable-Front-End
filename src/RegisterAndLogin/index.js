@@ -95,31 +95,14 @@ class RegisterAndLogin extends React.Component {
 	}
 
 	createDefaultCats = async (id) => {
-		// console.log("--Default category creation has been initiated--");
-
-		// const catName1 = {
-		// 	name: "Eating out"
-		// }
-		// const eatingOutResponse = await fetch(process.env.REACT_APP_BACKEND_URL + "category/user/" + id, {
-		// 	method: 'POST',
-		// 	credentials: 'include',
-		// 	body: JSON.stringify(catName1),
-		// 	headers: {
-		// 		'Content-Type': 'application/json'
-		// 	}
-		// })
-
-		// const catName2 = {
-		// 	name: "Groceries"
-		// }
 		const cats = [{
 			name: 'Groceries'
-		}, {
+			}, {
 			name: "Eating out"
-		}, {
+			}, {
 			name: "Gasoline"
 		}]
-		const GroceriesResponse = await fetch(process.env.REACT_APP_BACKEND_URL + "category/user/" + id, {
+		const catsResponse = await fetch(process.env.REACT_APP_BACKEND_URL + "category/user/" + id, {
 			method: 'POST',
 			credentials: 'include',
 			body: JSON.stringify(cats),
@@ -128,26 +111,8 @@ class RegisterAndLogin extends React.Component {
 			}
 		})
 
-		// const catName3 = {
-		// 	name: "Gasoline"
-		// }
-		// const GasolineResponse = await fetch(process.env.REACT_APP_BACKEND_URL + "category/user/" + id, {
-		// 	method: 'POST',
-		// 	credentials: 'include',
-		// 	body: JSON.stringify(catName3),
-		// 	headers: {
-		// 		'Content-Type': 'application/json'
-		// 	}
-		// })
-
-		// const parsedEatingOutResponse = await eatingOutResponse.json()
-		// console.log(parsedEatingOutResponse, "<<<< parsedEatingOutResponse");
-		const parsedGroceriesResponse = await GroceriesResponse.json()
-		console.log(parsedGroceriesResponse, "<<<< parsedGroceries");
-		// const parsedGasolineResponse = await GasolineResponse.json()
-		// console.log(parsedGasolineResponse, "<<<< parsedGasolineResponse");	
-
-
+		const parsedCatsResponse = await catsResponse.json()
+		console.log(parsedCatsResponse, "<<<< parsedCats");
 
 	}
 

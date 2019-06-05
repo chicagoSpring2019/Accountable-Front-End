@@ -20,9 +20,9 @@ class CategoryList extends React.Component {
 		console.log(categories);
 
 		console.log(this.props);
-		const categoryList = this.props.categories.map((cat) => {
+		const categoryList = categories.map((cat) => {
 			return (
-				<li key={cat._id} > {cat} </li> 
+				<li key={cat._id} > {cat.name} </li> 
 			)
 		})
 		return (
