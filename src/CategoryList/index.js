@@ -9,12 +9,12 @@ class CategoryList extends React.Component {
 
 		}
 	}
-	componentDidMount(){
-		this.forceUpdateHandler()
-	}
-	forceUpdateHandler() {
-		this.forceUpdate()
-	}
+	// componentDidMount(){
+	// 	this.forceUpdateHandler()
+	// }
+	// forceUpdateHandler() {
+	// 	this.forceUpdate()
+	// }
 	render() {
 		let categories = this.props.categories
 		console.log(categories);

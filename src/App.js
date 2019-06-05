@@ -36,13 +36,13 @@ class App extends React.Component {
 		}
 	}
 
-	setActiveUserId = (id) => {
+	setActiveUserId = async (id) => {
 		console.log(id, "<< the submitted id in setActiveUserId");
 		try {
 			this.setState({
 				activeUserId: id
 			})
-			this.retrieveExpensesAndCategories();
+			await this.retrieveExpensesAndCategories();
 		} catch(err) {
 			console.log(err);
 		}
@@ -94,12 +94,10 @@ class App extends React.Component {
 
   		return (
 			<div className="App">
-
 				{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUserEmailAndLogged={this.setActiveUserEmailAndLogged} setActiveUserId={this.setActiveUserId} /> }
-
-		  		<h1> - ACCOUNTABLE -</h1>
-		  		{ this.state.logged ? <CategoryList categories={this.state.categories} /> : <> </> }
-		  		{ this.state.logged ? <Expenses expenses={this.state.expenses} /> : <> </> }
+		  		<h1> - ACCOUNTABLE - </h1>
+		  		{ this.state.logged ? <CategoryList categories={this.state.categories} /> : null }
+		  		{ this.state.logged ? <Expenses expenses={this.state.expenses} activeUserId={this.state.activeUserId} /> : null }
 			</div>
   		);
   	}
