@@ -68,6 +68,12 @@ class Expenses extends React.Component {
 		// console.log(this.props, "<<<<<. this.props in render() ");
 		// console.log(" -- -- -- -- -- -- ");
 
+		const optionsToInsert = this.props.categories.map((op, i) => {
+			return (
+				<option key={i} value={op} > {op.name} </option>
+			)
+		})
+
 		const expenseForm = (
 			<div>
 				<form id="expense-form" onSubmit={this.createExpense}>
@@ -76,9 +82,7 @@ class Expenses extends React.Component {
 
 					Category:
 					<select value={this.state.category} onChange={this.handleSelectChange}>
-						<option value="Zero 0 zed"> Zero </option>
-						<option value="One 1 uno"> One </option>
-						<option value="Two 2 dos"> Two </option>
+						{optionsToInsert}
 					</select>
 
 					Amount:

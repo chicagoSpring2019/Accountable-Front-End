@@ -97,7 +97,7 @@ class App extends React.Component {
 				{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUserEmailAndLogged={this.setActiveUserEmailAndLogged} setActiveUserId={this.setActiveUserId} /> }
 		  		<h1> - ACCOUNTABLE - </h1>
 		  		{ this.state.logged ? <CategoryList categories={this.state.categories} /> : null }
-		  		{ this.state.logged ? <Expenses expenses={this.state.expenses} activeUserId={this.state.activeUserId} /> : null }
+		  		{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} /> : null }
 			</div>
   		);
   	}
