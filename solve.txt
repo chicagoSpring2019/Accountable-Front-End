@@ -1,2 +1,1 @@
-
-figure out how to select proper cat object to send to backend
+sort that shit

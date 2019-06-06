@@ -5,15 +5,17 @@ class Expenses extends React.Component {
 	constructor(props) {
 		super();
 		this.state = {
-			amount: '',
 			catIterator: '0',
-			date: ''
+			date: '',
+			amount: '',
+
 		}
 	}
 
 	handleChange = (e) => {
 		this.setState({[e.target.name]: e.target.value});
 	}
+
 
 	handleSelectChange = async (e) => {
 		console.log("--handleSelectChange initiated--");
@@ -25,7 +27,7 @@ class Expenses extends React.Component {
 
 	clearForm = () => {
 		this.setState({
-			amount: '',
+			displayAmount: '',
 			date: '',
 			catIterator: '0',
 		})
@@ -66,8 +68,6 @@ class Expenses extends React.Component {
 	render() {
 
 		console.log(this.state)
-		console.log("<=== this.state in handleSelectChange()");
-
 		const optionsToInsert = this.props.categories.map((op, i) => {
 			return (
 				<option key={i} value={i} > {op.name} </option>
@@ -96,25 +96,43 @@ class Expenses extends React.Component {
 		const expenseLog = this.props.expenses.map((entry) => {
 			const fullDate = entry.date;
 			const cutDate = [];
-			for (let i = 0; i < 10; i++) {
-			    console.log(fullDate.charAt(i));
-			    cutDate.push(fullDate.charAt(i))
+			for (let i = 2; i < 10; i++) {
+				cutDate.push(fullDate.charAt(i))
 			}
-			console.log(cutDate, "cutDate <<<<<");
 			const cutDateSring = cutDate.join('');
-			console.log(cutDateSring, "<=== string");
+			const float = entry.amount.toFixed(2)
 			return (
-				<li className='entryBar' key={entry._id} > <p className='entrySquare'> {cutDateSring} </p> <p className='entrySquare'> {entry.category.name} </p> <p className='entrySquare'> {entry.amount} </p> </li>
+				 <tr key={entry._id}> 
+					<td> {cutDateSring} </td> 
+					<td> {entry.category.name} </td> 
+					<td> ${float} </td> 
+					<td> <button> Edit </button> </td>
+					<td> <button> Delete </button> </td>
+				 </tr>
 			)
 		})
+
+		const sortedLog = expenseLog.sort()
+				// <ul>
+				// 	{expenseLog}
+				// </ul>
 
 		return (
 			<div>
 				<h4> Expense Log </h4>
 				{expenseForm}
-				<ul>
-					{expenseLog}
-				</ul>
+				<table>
+					<thead>
+						<tr>
+							<th>DATE</th>
+							<th>CATEGORY</th>
+							<th>AMOUNT</th>
+						</tr>
+					</thead>
+					<tbody>
+						{sortedLog}
+					</tbody>
+				</table>
 			</div>
 		)
 	}
