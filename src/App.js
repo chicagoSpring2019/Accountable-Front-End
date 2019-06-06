@@ -91,10 +91,6 @@ class App extends React.Component {
 			</div>
 		)
 
-		// { this.state.logged ? <CategoryList categories={this.state.categories} /> : null }
-
-		
-
   		return (
 			<div className="App">
 				{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUserEmailAndLogged={this.setActiveUserEmailAndLogged} setActiveUserId={this.setActiveUserId} /> }

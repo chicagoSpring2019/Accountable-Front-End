@@ -27,12 +27,28 @@ class Expenses extends React.Component {
 
 	clearForm = () => {
 		this.setState({
-			displayAmount: '',
+			amount: '',
 			date: '',
 			catIterator: '0',
 		})
 	}
 
+	deleteExpense = async (e) => {
+		try {
+
+			console.log("entry id hopefully:")
+			console.log(e.currentTarget.id);
+
+			const deleteResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/expense/' + e.currentTarget.id, {
+				method: 'DELETE',
+				credentials: 'include',
+			});
+			const parsedResponse = await deleteResponse.json();
+			this.props.retrieveExpensesAndCategories();
+		} catch(err) {
+			console.log(err);
+		}
+	}
 
 
 	createExpense = async (e) => {
@@ -66,7 +82,6 @@ class Expenses extends React.Component {
 
 
 	render() {
-
 		console.log(this.state)
 		const optionsToInsert = this.props.categories.map((op, i) => {
 			return (
@@ -107,7 +122,7 @@ class Expenses extends React.Component {
 					<td> {entry.category.name} </td> 
 					<td> ${float} </td> 
 					<td> <button> Edit </button> </td>
-					<td> <button> Delete </button> </td>
+					<td> <button id={entry._id} onClick={this.deleteExpense}> Delete </button> </td>
 				 </tr>
 			)
 		})
