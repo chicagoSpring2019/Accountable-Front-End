@@ -17,9 +17,9 @@ class CategoryList extends React.Component {
 	// }
 	render() {
 		let categories = this.props.categories
-		console.log(categories);
+		console.log(categories, "<< categories in CategoryList.js");
 
-		console.log(this.props);
+		console.log(this.props, "<<<< this.props in CategoryList.js");
 		const categoryList = categories.map((cat) => {
 			return (
 				<li key={cat._id} > {cat.name} </li> 

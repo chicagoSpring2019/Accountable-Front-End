@@ -1,0 +1,16 @@
+.entryBar {
+	background-color: lightgrey;
+}
+
+.entrySquare {
+	display: inline-block;
+	border: 2px solid black;
+	margin-left: 0;
+	margin-right: 0;
+	padding-right: 12px;
+	padding-left: 12px;
+}
+
+ul {
+	list-style-type: none;
+}

@@ -1,12 +1,13 @@
 import React from 'react';
+import './index.css'
 
 class Expenses extends React.Component {
 	constructor(props) {
 		super();
 		this.state = {
 			amount: '',
-			category: '',
-			date: '',
+			catIterator: '0',
+			date: ''
 		}
 	}
 
@@ -15,33 +16,36 @@ class Expenses extends React.Component {
 	}
 
 	handleSelectChange = async (e) => {
-		console.log("--handleSelectChange initiated");
-		this.setState({category: e.target.value});
-		console.log(e.target.value, "<<e.target.value<<");
-		console.log(this.state , "<=== this.state in handleSelectChange()");
+		console.log("--handleSelectChange initiated--");
+		this.setState({
+			catIterator: e.target.value
+		});
 	}
+
 
 	clearForm = () => {
 		this.setState({
 			amount: '',
-			category: '',
 			date: '',
+			catIterator: '0',
 		})
 	}
 
 
+
 	createExpense = async (e) => {
-
 		e.preventDefault()
-
+		const bodyToSend = {
+			amount: this.state.amount,
+			date: this.state.date,
+			category: this.props.categories[this.state.catIterator],
+		}
 		console.log("--Expense entry creation has been initiated--");
 		try {
-			console.log(this.state, "<<< state");
-			console.log(process.env.REACT_APP_BACKEND_URL + 'expense/user/' + this.props.activeUserId, "<<<the route");
 			const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/user/' + this.props.activeUserId,  {
 				method: 'POST',
 				credentials: 'include',
-				body: JSON.stringify(this.state),
+				body: JSON.stringify(bodyToSend),
 				headers: {
 					'Content-Type': 'application/json'
 				}
@@ -49,8 +53,7 @@ class Expenses extends React.Component {
 			this.clearForm();
 			const parsedResponse = await entryResponse.json();
 			console.log(parsedResponse, "<<< parsed entry resposne <<<");
-
-
+			this.props.retrieveExpensesAndCategories();
 		} catch(err) {
 			console.log(err);
 		}
@@ -61,16 +64,13 @@ class Expenses extends React.Component {
 
 
 	render() {
-		let expenses = this.props.expenses
-		console.log(this.props.activeUserId, "<<<    activeUserId");
-		// console.log(" ");
-		// console.log(expenses, "<<<. expenses in render(). ");
-		// console.log(this.props, "<<<<<. this.props in render() ");
-		// console.log(" -- -- -- -- -- -- ");
+
+		console.log(this.state)
+		console.log("<=== this.state in handleSelectChange()");
 
 		const optionsToInsert = this.props.categories.map((op, i) => {
 			return (
-				<option key={i} value={op} > {op.name} </option>
+				<option key={i} value={i} > {op.name} </option>
 			)
 		})
 
@@ -78,15 +78,15 @@ class Expenses extends React.Component {
 			<div>
 				<form id="expense-form" onSubmit={this.createExpense}>
 					Date:
-					<input type='text' name='date' value={this.state.date} onChange={this.handleChange}/>
+					<input type='text' name='date' value={this.state.date} placeholder='XXXX - XX - XX' onChange={this.handleChange}/>
 
 					Category:
-					<select value={this.state.category} onChange={this.handleSelectChange}>
+					<select onChange={this.handleSelectChange}>
 						{optionsToInsert}
 					</select>
 
 					Amount:
-					<input type='text' name='amount' value={this.state.amount} onChange={this.handleChange}/>
+					<input type='text' name='amount' value={this.state.amount} placeholder='XX . XX' onChange={this.handleChange}/>
 
 					<button> Post the expense </button>
 				</form>
@@ -94,8 +94,17 @@ class Expenses extends React.Component {
 		)
 
 		const expenseLog = this.props.expenses.map((entry) => {
+			const fullDate = entry.date;
+			const cutDate = [];
+			for (let i = 0; i < 10; i++) {
+			    console.log(fullDate.charAt(i));
+			    cutDate.push(fullDate.charAt(i))
+			}
+			console.log(cutDate, "cutDate <<<<<");
+			const cutDateSring = cutDate.join('');
+			console.log(cutDateSring, "<=== string");
 			return (
-				<li key={entry._id} > <p> {entry.date} </p> <p> {entry.category} </p> <p> {entry.amount} </p> </li>
+				<li className='entryBar' key={entry._id} > <p className='entrySquare'> {cutDateSring} </p> <p className='entrySquare'> {entry.category.name} </p> <p className='entrySquare'> {entry.amount} </p> </li>
 			)
 		})
 

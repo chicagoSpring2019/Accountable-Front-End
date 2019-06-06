@@ -59,7 +59,7 @@ class RegisterAndLogin extends React.Component {
 		  	console.log(parsedResponse, "<=-=-= parsedResponse");
 		  	if(parsedResponse.status === 200) {
 				console.log(parsedResponse.data, '<<< parsedResponse.data in handleLogin()');
-				this.props.setActiveUserEmailAndLogged(parsedResponse.data.email);
+				await this.props.setActiveUserEmailAndLogged(parsedResponse.data.email);
 				this.props.setActiveUserId(parsedResponse.data._id);
 
 		  	}
@@ -82,7 +82,7 @@ class RegisterAndLogin extends React.Component {
 			})
 			this.clearForm();
 			const parsedResponse = await registerResponse.json();
-			console.log(parsedResponse, "<----  parsedResponse");
+			console.log(parsedResponse, "<----  parsedResponse in handleRegister()");
 			if(parsedResponse.status === 200) {
 				console.log(parsedResponse.data, '<<< parsedResponse.data in handleRegister()');
 				await this.createDefaultCats(parsedResponse.data._id);
@@ -112,7 +112,7 @@ class RegisterAndLogin extends React.Component {
 		})
 
 		const parsedCatsResponse = await catsResponse.json()
-		console.log(parsedCatsResponse, "<<<< parsedCats");
+		console.log(parsedCatsResponse, "<<<< parsedCats in REg and Login .js");
 
 	}
 
@@ -126,7 +126,7 @@ class RegisterAndLogin extends React.Component {
 					<input type='text' name='email' value={this.state.email} onChange={this.handleChange}/>
 					Password:
 					<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
-					<button type='sumbit'> Log in </button>
+					<button> Log in </button>
 				</form>
 				<p> Don't have an account? Set one up now! It's free and easy. </p>
 				<button onClick={this.showRegisterForm}> Sign up </button>
