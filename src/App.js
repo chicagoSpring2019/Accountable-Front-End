@@ -17,6 +17,7 @@ class App extends React.Component {
 	}
 	componentDidMount() {
 		this.retrieveExpensesAndCategories().then(categories => {
+			console.log();
 			if(this.logged) {
 				this.setState({
 					categories: [...categories]
