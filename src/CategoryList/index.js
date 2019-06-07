@@ -9,12 +9,7 @@ class CategoryList extends React.Component {
 
 		}
 	}
-	// componentDidMount(){
-	// 	this.forceUpdateHandler()
-	// }
-	// forceUpdateHandler() {
-	// 	this.forceUpdate()
-	// }
+	
 	render() {
 		let categories = this.props.categories
 		console.log(categories, "<< categories in CategoryList.js");
@@ -25,12 +20,14 @@ class CategoryList extends React.Component {
 				<li key={cat._id} > {cat.name} </li> 
 			)
 		})
+
+				//<ul>
+				//	{categoryList}
+				//</ul>
+
 		return (
 			<div>
-				<h4> Categories </h4>
-				<ul>
-					{categoryList}
-				</ul>
+				<button> Create new Category </button>
 			</div>
 
 		)

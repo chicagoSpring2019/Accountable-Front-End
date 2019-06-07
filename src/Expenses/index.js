@@ -1,5 +1,7 @@
 import React from 'react';
-import './index.css'
+import './index.css';
+import { Modal, Form, Button, Label, Header } from 'semantic-ui-react';
+
 
 class Expenses extends React.Component {
 	constructor(props) {
@@ -8,7 +10,7 @@ class Expenses extends React.Component {
 			catIterator: '0',
 			date: '',
 			amount: '',
-
+			showCatCreateModal: false,
 		}
 	}
 
@@ -37,9 +39,9 @@ class Expenses extends React.Component {
 		try {
 
 			console.log("entry id hopefully:")
-			console.log(e.currentTarget.id);
+			console.log(e.currentTarget.dataset.id);
 
-			const deleteResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/expense/' + e.currentTarget.id, {
+			const deleteResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/expense/' + e.currentTarget.dataset.id, {
 				method: 'DELETE',
 				credentials: 'include',
 			});
@@ -100,8 +102,8 @@ class Expenses extends React.Component {
 						{optionsToInsert}
 					</select>
 
-					Amount:
-					<input type='text' name='amount' value={this.state.amount} placeholder='XX . XX' onChange={this.handleChange}/>
+					Amount: $
+					<input type='text' name='amount' value={this.state.amount} placeholder='' onChange={this.handleChange}/>
 
 					<button> Post the expense </button>
 				</form>
@@ -122,19 +124,37 @@ class Expenses extends React.Component {
 					<td> {entry.category.name} </td> 
 					<td> ${float} </td> 
 					<td> <button> Edit </button> </td>
-					<td> <button id={entry._id} onClick={this.deleteExpense}> Delete </button> </td>
+					<td> <button data-id={entry._id} onClick={this.deleteExpense}> Delete </button> </td>
 				 </tr>
 			)
 		})
 
 		const sortedLog = expenseLog.sort()
-				// <ul>
-				// 	{expenseLog}
-				// </ul>
+
+		const CreateCatModal = () => {
+			return (
+				<Modal open={this.state.showCatCreateModal}>
+					<Header>Edit Movie</Header>
+      				<Modal.Content>
+        				<Form onSubmit={this.createCategory}>
+          					<Label>
+            					Create a new category:
+          					</Label>
+          					<Form.Input type='text' name='name'/>
+          					
+          					<Modal.Actions>
+           						<Button>Create new Category</Button>
+          					</Modal.Actions>
+        				</Form>
+      				</Modal.Content>
+    			</Modal>
+			)
+		}
 
 		return (
 			<div>
 				<h4> Expense Log </h4>
+				<button> Create new Category </button>
 				{expenseForm}
 				<table>
 					<thead>
@@ -148,6 +168,8 @@ class Expenses extends React.Component {
 						{sortedLog}
 					</tbody>
 				</table>
+				<CreateCatModal/>
+
 			</div>
 		)
 	}
