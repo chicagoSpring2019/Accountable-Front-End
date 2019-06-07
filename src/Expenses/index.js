@@ -11,6 +11,13 @@ class Expenses extends React.Component {
 			date: '',
 			amount: '',
 			showCatCreateModal: false,
+			newName: '',
+			showExpenseUpdateModal: false,
+			editAmount: 0,
+			editDate: '',
+			editId: '',
+			expenseOldTot: 0,
+			expenseNewTot: 0,
 		}
 	}
 
@@ -30,8 +37,6 @@ class Expenses extends React.Component {
 	clearForm = () => {
 		this.setState({
 			amount: '',
-			date: '',
-			catIterator: '0',
 		})
 	}
 
@@ -46,7 +51,8 @@ class Expenses extends React.Component {
 				credentials: 'include',
 			});
 			const parsedResponse = await deleteResponse.json();
-			this.props.retrieveExpensesAndCategories();
+			await this.props.retrieveExpensesAndCategories();
+			this.props.loadTotal();
 		} catch(err) {
 			console.log(err);
 		}
@@ -73,7 +79,88 @@ class Expenses extends React.Component {
 			this.clearForm();
 			const parsedResponse = await entryResponse.json();
 			console.log(parsedResponse, "<<< parsed entry resposne <<<");
+			await this.props.retrieveExpensesAndCategories();
+			this.props.loadTotal();
+			
+		} catch(err) {
+			console.log(err);
+		}
+	}
+
+	setCatModalStateFunction = async (e) => {
+		e.preventDefault()
+		this.setState({
+			showCatCreateModal:true
+		})
+	}
+
+	createCategory = async (e) => {
+		e.preventDefault()
+		const bodyToSend = [{
+			name: this.state.newName,
+		}]
+		console.log("--Expense entry creation has been initiated--");
+		try {
+			const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'category/user/' + this.props.activeUserId,  {
+				method: 'POST',
+				credentials: 'include',
+				body: JSON.stringify(bodyToSend),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			const parsedResponse = await entryResponse.json();
+			console.log(parsedResponse, "<<< parsed entry resposne <<<");
 			this.props.retrieveExpensesAndCategories();
+			this.setState({
+				showCatCreateModal: false
+			})
+		} catch(err) {
+			console.log(err);
+		}
+	}
+
+
+
+
+	openUpdateFunction = async (e) => {
+		e.preventDefault()
+		this.setState({
+			editId: e.currentTarget.dataset.id,
+			editAmount: e.currentTarget.dataset.amount,
+			editDate: e.currentTarget.dataset.date,
+			category: this.props.categories[this.state.catIterator],
+			showExpenseUpdateModal: true,
+		})
+	}
+
+
+
+
+	updateExpenseF = async (e) => {
+		e.preventDefault();
+		console.log("--Expense update has been initiated--");
+		this.setState({
+			showExpenseUpdateModal: false,
+		})
+		const bodyToSend = {
+			amount: this.state.editAmount,
+			date: this.state.editDate,
+			category: this.props.categories[this.state.catIterator],
+		}
+		try {
+			const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/expense/' + this.state.editId,  {
+				method: 'PUT',
+				credentials: 'include',
+				body: JSON.stringify(bodyToSend),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			const parsedResponse = await entryResponse.json();
+			console.log(parsedResponse, "<<< parsed entry resposne <<<");
+			await this.props.retrieveExpensesAndCategories();
+			this.props.loadTotal()
 		} catch(err) {
 			console.log(err);
 		}
@@ -83,8 +170,17 @@ class Expenses extends React.Component {
 
 
 
+
+
+
+
+
+
+
+
+
 	render() {
-		console.log(this.state)
+
 		const optionsToInsert = this.props.categories.map((op, i) => {
 			return (
 				<option key={i} value={i} > {op.name} </option>
@@ -95,7 +191,7 @@ class Expenses extends React.Component {
 			<div>
 				<form id="expense-form" onSubmit={this.createExpense}>
 					Date:
-					<input type='text' name='date' value={this.state.date} placeholder='XXXX - XX - XX' onChange={this.handleChange}/>
+					<input type='text' name='date' value={this.state.date} placeholder='yyyy-mm-dd' onChange={this.handleChange}/>
 
 					Category:
 					<select onChange={this.handleSelectChange}>
@@ -105,7 +201,7 @@ class Expenses extends React.Component {
 					Amount: $
 					<input type='text' name='amount' value={this.state.amount} placeholder='' onChange={this.handleChange}/>
 
-					<button> Post the expense </button>
+					<button>Post the expense</button>
 				</form>
 			</div>
 		)
@@ -123,7 +219,7 @@ class Expenses extends React.Component {
 					<td> {cutDateSring} </td> 
 					<td> {entry.category.name} </td> 
 					<td> ${float} </td> 
-					<td> <button> Edit </button> </td>
+					<td> <button data-id={entry._id} data-date={entry.date} data-amount={float} data-cat={entry.category.name} onClick={this.openUpdateFunction}> Edit </button> </td>
 					<td> <button data-id={entry._id} onClick={this.deleteExpense}> Delete </button> </td>
 				 </tr>
 			)
@@ -131,16 +227,15 @@ class Expenses extends React.Component {
 
 		const sortedLog = expenseLog.sort()
 
-		const CreateCatModal = () => {
-			return (
+		const createCatModal = (
+
 				<Modal open={this.state.showCatCreateModal}>
-					<Header>Edit Movie</Header>
       				<Modal.Content>
         				<Form onSubmit={this.createCategory}>
           					<Label>
             					Create a new category:
           					</Label>
-          					<Form.Input type='text' name='name'/>
+          					<Form.Input type='text' name='newName' value={this.state.newName} onChange={this.handleChange}/>
           					
           					<Modal.Actions>
            						<Button>Create new Category</Button>
@@ -148,13 +243,41 @@ class Expenses extends React.Component {
         				</Form>
       				</Modal.Content>
     			</Modal>
-			)
-		}
+			
+		)
+
+
+
+		const updateExpenseModal = (
+
+			<Modal open={this.state.showExpenseUpdateModal}>
+  				<Modal.Content>
+    				<Form onSubmit={this.updateExpenseF}>
+      					<Label>
+        					Update the expense:
+      					</Label>
+      					<Form.Input type='text' name='editDate' value={this.state.editDate} onChange={this.handleChange}/>
+      					<select onChange={this.handleSelectChange}>
+							{optionsToInsert}
+						</select>
+      					<Form.Input type='text' name='editAmount' value={this.state.editAmount} onChange={this.handleChange}/>          					
+      					<Modal.Actions>
+       						<Button>Update the modal</Button>
+      					</Modal.Actions>
+    				</Form>
+  				</Modal.Content>
+			</Modal>
+			
+		)
 
 		return (
 			<div>
 				<h4> Expense Log </h4>
-				<button> Create new Category </button>
+				<form onSubmit={this.setCatModalStateFunction}>
+					<button> Create new Category </button>
+				</form>
+				{createCatModal}
+				{updateExpenseModal}
 				{expenseForm}
 				<table>
 					<thead>
@@ -168,12 +291,11 @@ class Expenses extends React.Component {
 						{sortedLog}
 					</tbody>
 				</table>
-				<CreateCatModal/>
-
 			</div>
 		)
 	}
 }
+
 
 
 export default Expenses;

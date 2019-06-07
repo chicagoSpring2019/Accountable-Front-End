@@ -3,6 +3,7 @@ import './App.css';
 import RegisterAndLogin from './RegisterAndLogin/index'
 import CategoryList from './CategoryList/index'
 import Expenses from './Expenses/index'
+import DataManip from './DataManip/index'
 
 class App extends React.Component {
 	constructor() {
@@ -13,6 +14,8 @@ class App extends React.Component {
 			activeUserId: null,
 			categories: [],
 			expenses: [],
+			expenseOldTot: 0,
+			expenseNewTot: 0,
 		}
 	}
 	componentDidMount() {
@@ -24,7 +27,26 @@ class App extends React.Component {
 				})
 			}
 		})
+		this.loadTotal();
+
 	}
+
+	loadTotal = () => {
+		const expenses = this.state.expenses.map((ex, i) => {
+			return (
+				ex.amount
+			)
+		})
+		console.log(expenses, "<--- expenses");
+		let newNum = 0;
+		for(let i = 0; i < expenses.length; i++ ) {
+			newNum += expenses[i];			
+		}
+		this.setState({
+			expenseOldTot: newNum
+		})
+	}
+
 	setActiveUserEmailAndLogged = (email) =>	{
 		console.log(email, "<<< the submitted email address in setActiveUser");
 		try {
@@ -44,6 +66,7 @@ class App extends React.Component {
 				activeUserId: id
 			})
 			await this.retrieveExpensesAndCategories();
+			this.loadTotal()
 		} catch(err) {
 			console.log(err);
 		}
@@ -85,6 +108,27 @@ class App extends React.Component {
 		}
 	}
 
+	addTotal = async (amount) => {
+		console.log("--Additon to total--");
+		await this.setState({
+			expenseNewTot: this.state.expenseOldTot + amount,
+		})
+		this.setState({
+			expenseOldTot: this.state.expenseNewTot
+		})
+	}
+
+	subTotal = async (amount) => {
+		console.log("--Subtraction from total---");
+		await this.setState({
+			expenseNewTot: this.state.expenseOldTot - amount,
+		})
+		this.setState({
+			expenseOldTot: this.state.expenseNewTot
+		})
+	}
+
+
 	render() {
 		const LogOut = (
 			<div>
@@ -97,8 +141,10 @@ class App extends React.Component {
 				{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUserEmailAndLogged={this.setActiveUserEmailAndLogged} setActiveUserId={this.setActiveUserId} /> }
 		  		<h1> - ACCOUNTABLE - </h1>
 
-		  		{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} /> : null }
+		  		{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} 
+		  		retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal} subTotal={this.subTotal} /> : null }
 
+		  		{ this.state.logged ? <DataManip expenseOldTot={this.state.expenseOldTot} /> : null }
 
 			</div>
   		);
