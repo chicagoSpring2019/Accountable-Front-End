@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Overpass&display=swap" rel="stylesheet')
+
+
+
+
+
 .entryBar {
 	background-color: lightgrey;
 }
@@ -11,6 +17,45 @@
 	padding-left: 12px;
 }
 
-ul {
-	list-style-type: none;
+.dateBox {
+	min-width: 85px
 }
+
+
+td button {
+	width: 100%;
+	height: 100%;
+}
+
+table  {
+	font-family: 'Montserrat', sans-serif;
+	border: 2px solid #4F7849;
+	background-color: #EEEEEE;
+	width: 90%;
+	text-align: center;
+	border-collapse: collapse;
+	margin: 20px;
+}
+table  td, table  th {
+  	border: 1px solid #4F7849;
+  	padding: 3px 2px;
+}
+table  tbody td {
+  	font-size: 19px;
+  	color: #4F7849;
+}
+table  tr:nth-child(even) {
+  	background: #CEE0CC;
+}
+/*table  tfoot {
+  font-size: 21px;
+  color: #FFFFFF;
+  background: #4F7849;
+  background: -moz-linear-gradient(top, #7b9a76 0%, #60855b 66%, #4F7849 100%);
+  background: -webkit-linear-gradient(top, #7b9a76 0%, #60855b 66%, #4F7849 100%);
+  background: linear-gradient(to bottom, #7b9a76 0%, #60855b 66%, #4F7849 100%);
+  border-top: 1px solid #444444;
+}
+table  tfoot td {
+  font-size: 21px;
+}*/

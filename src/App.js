@@ -15,21 +15,12 @@ class App extends React.Component {
 			categories: [],
 			expenses: [],
 			expenseOldTot: 0,
-			expenseNewTot: 0,
+			catNameList: [],
+			categoryTotals: [],
 		}
 	}
-	componentDidMount() {
-		this.retrieveExpensesAndCategories().then(categories => {
-			console.log();
-			if(this.logged) {
-				this.setState({
-					categories: [...categories]
-				})
-			}
-		})
-		this.loadTotal();
 
-	}
+
 
 	loadTotal = () => {
 		const expenses = this.state.expenses.map((ex, i) => {
@@ -46,6 +37,23 @@ class App extends React.Component {
 			expenseOldTot: newNum
 		})
 	}
+
+	loadCatList = async () => {
+
+		const catNameList = await this.state.expenses.map((item) => {
+			return (
+				item.category.name , item.amount
+			)
+		})
+		this.setState({
+			catNameList: catNameList
+		})
+		console.log(this.state.catNameList);
+		console.log('^^^^^^ catNameList in state in loadCatList ^^^^^^');
+		console.log(' ');
+	}
+
+	
 
 	setActiveUserEmailAndLogged = (email) =>	{
 		console.log(email, "<<< the submitted email address in setActiveUser");
@@ -66,7 +74,8 @@ class App extends React.Component {
 				activeUserId: id
 			})
 			await this.retrieveExpensesAndCategories();
-			this.loadTotal()
+			this.loadTotal();
+			this.loadCatList();
 		} catch(err) {
 			console.log(err);
 		}
@@ -80,9 +89,10 @@ class App extends React.Component {
 			const categoryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'category/user/' + this.state.activeUserId)
 			const parsedExpenseResponse = await expenseResponse.json();
 			const parsedCategoryResponse = await categoryResponse.json();
-			console.log(parsedCategoryResponse.data,"<+++ parsedCategoryResponse");
-			console.log(parsedExpenseResponse.data, "<======= parsedExpenseResponse");
+			console.log(parsedCategoryResponse.data,"<--- parsedCategoryResponse");
+			console.log(parsedExpenseResponse.data, "<=== parsedExpenseResponse");
 			this.setState({
+				categoryTotals: parsedCategoryResponse.data.name
 				categories: parsedCategoryResponse.data,
 				expenses: parsedExpenseResponse.data
 			})
@@ -108,44 +118,36 @@ class App extends React.Component {
 		}
 	}
 
-	addTotal = async (amount) => {
-		console.log("--Additon to total--");
-		await this.setState({
-			expenseNewTot: this.state.expenseOldTot + amount,
-		})
-		this.setState({
-			expenseOldTot: this.state.expenseNewTot
-		})
-	}
 
-	subTotal = async (amount) => {
-		console.log("--Subtraction from total---");
-		await this.setState({
-			expenseNewTot: this.state.expenseOldTot - amount,
-		})
-		this.setState({
-			expenseOldTot: this.state.expenseNewTot
-		})
-	}
+
+
+
+
+
+
+
+
+
 
 
 	render() {
 		const LogOut = (
-			<div>
+			<div className="logOut">
 				<button onClick={this.logOutFunction}> Log out </button>
 			</div>
 		)
 
   		return (
 			<div className="App">
-				{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUserEmailAndLogged={this.setActiveUserEmailAndLogged} setActiveUserId={this.setActiveUserId} /> }
-		  		<h1> - ACCOUNTABLE - </h1>
-
-		  		{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} 
-		  		retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal} subTotal={this.subTotal} /> : null }
-
-		  		{ this.state.logged ? <DataManip expenseOldTot={this.state.expenseOldTot} /> : null }
-
+				<div className="main">
+		  			<h1>  Accountable  </h1>
+					{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUserEmailAndLogged={this.setActiveUserEmailAndLogged} setActiveUserId={this.setActiveUserId} /> }
+					{ this.state.logged ? <DataManip expenseOldTot={this.state.expenseOldTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories}/> : null }
+		  			{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} 
+		  			retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal} loadCatList={this.loadCatList} /> : null }
+	
+		  			<h6 class="spacer">© Gregory Gancarz - 2019</h6>
+		  		</div>
 			</div>
   		);
   	}

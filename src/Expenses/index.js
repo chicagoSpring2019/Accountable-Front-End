@@ -3,6 +3,7 @@ import './index.css';
 import { Modal, Form, Button, Label, Header } from 'semantic-ui-react';
 
 
+
 class Expenses extends React.Component {
 	constructor(props) {
 		super();
@@ -115,6 +116,8 @@ class Expenses extends React.Component {
 			this.setState({
 				showCatCreateModal: false
 			})
+			console.log("about to load cat list");
+			this.props.loadCatList();
 		} catch(err) {
 			console.log(err);
 		}
@@ -216,16 +219,14 @@ class Expenses extends React.Component {
 			const float = entry.amount.toFixed(2)
 			return (
 				 <tr key={entry._id}> 
-					<td> {cutDateSring} </td> 
+					<td className="dateBox"> {cutDateSring} </td> 
 					<td> {entry.category.name} </td> 
 					<td> ${float} </td> 
-					<td> <button data-id={entry._id} data-date={entry.date} data-amount={float} data-cat={entry.category.name} onClick={this.openUpdateFunction}> Edit </button> </td>
-					<td> <button data-id={entry._id} onClick={this.deleteExpense}> Delete </button> </td>
+					<td className="editButton"> <button data-id={entry._id} data-date={entry.date} data-amount={float} data-cat={entry.category.name} onClick={this.openUpdateFunction}> Edit </button> </td>
+					<td className="editButton"> <button data-id={entry._id} onClick={this.deleteExpense}> Delete </button> </td>
 				 </tr>
 			)
 		})
-
-		const sortedLog = expenseLog.sort()
 
 		const createCatModal = (
 
@@ -272,25 +273,27 @@ class Expenses extends React.Component {
 
 		return (
 			<div>
-				<h4> Expense Log </h4>
 				<form onSubmit={this.setCatModalStateFunction}>
 					<button> Create new Category </button>
 				</form>
 				{createCatModal}
 				{updateExpenseModal}
 				{expenseForm}
-				<table>
-					<thead>
-						<tr>
-							<th>DATE</th>
-							<th>CATEGORY</th>
-							<th>AMOUNT</th>
-						</tr>
-					</thead>
-					<tbody>
-						{sortedLog}
-					</tbody>
-				</table>
+				<div class="table-wrapper">
+					<table>
+						<thead>
+							<tr>
+								<th>DATE</th>
+								<th className="catBox">CATEGORY</th>
+								<th>AMOUNT</th>
+								<th colspan="2"> Editing </th>
+							</tr>
+						</thead>
+						<tbody>
+							{expenseLog}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		)
 	}

@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.css';
 
 class RegisterAndLogin extends React.Component {
 	constructor(){
@@ -95,7 +96,8 @@ class RegisterAndLogin extends React.Component {
 	}
 
 	createDefaultCats = async (id) => {
-		const cats = [{
+		const cats = [
+			{
 			name: 'Groceries'
 			}, {
 			name: "Eating out"
@@ -137,10 +139,17 @@ class RegisterAndLogin extends React.Component {
 			<div>
 				<h3 >Registration </h3>
 				<form id="register-form" onSubmit={this.handleRegister}>
+					<wrapper className="logForm">
 					Email:
 					<input type='text' name='email' value={this.state.email} onChange={this.handleChange}/>
+					</wrapper>
+
+					<wrapper className="logForm">
 					Password:
 					<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
+					</wrapper>
+
+
 					<button type='sumbit'>Register</button>
 				</form>
 				<p> You have an account after all? </p>
