@@ -92,7 +92,7 @@ class App extends React.Component {
 			console.log(parsedCategoryResponse.data,"<--- parsedCategoryResponse");
 			console.log(parsedExpenseResponse.data, "<=== parsedExpenseResponse");
 			this.setState({
-				categoryTotals: parsedCategoryResponse.data.name
+				categoryTotals: parsedCategoryResponse.data.name,
 				categories: parsedCategoryResponse.data,
 				expenses: parsedExpenseResponse.data
 			})
