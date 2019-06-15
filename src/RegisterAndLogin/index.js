@@ -69,7 +69,10 @@ class RegisterAndLogin extends React.Component {
 		  	const parsedResponse = await loginResponse.json();
 		  	console.log(parsedResponse, "<=-=-= parsedResponse");
 		  	if (parsedResponse.status === 200) {
-				console.log(parsedResponse.data, '<<< parsedResponse.data in handleLogin()');
+				this.setState({
+					showMessage: true,
+					message: "Logging in...",
+				})
 				await this.props.setActiveUserEmailAndLogged(parsedResponse.data.email);
 				this.props.setActiveUserId(parsedResponse.data._id);
 			} else if (parsedResponse.status === 404) {
@@ -78,7 +81,6 @@ class RegisterAndLogin extends React.Component {
 					showMessage: true,
 					message: parsedResponse.message
 				})
-				console.log(this.state.message, "<<<state message");
 		  	}
 		} catch(err) {
 		  	console.log(err);
@@ -90,6 +92,10 @@ class RegisterAndLogin extends React.Component {
 		console.log('--handleRegister() has been initiated--');
 		if (this.state.password.length >= 6) {
 			try {
+				await this.setState({
+					message: "Creating account...",
+					showMessage: true,
+				})
 				const registerResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/register',  {
 					method: 'POST',
 					credentials: 'include',
@@ -102,7 +108,6 @@ class RegisterAndLogin extends React.Component {
 				const parsedResponse = await registerResponse.json();
 				console.log(parsedResponse, "<----  parsedResponse in handleRegister()");
 				if(parsedResponse.status === 200) {
-					console.log(parsedResponse.data, '<<< parsedResponse.data in handleRegister()');
 					await this.createDefaultCats(parsedResponse.data._id);
 					this.props.setActiveUserEmailAndLogged(parsedResponse.data.email);
 					this.props.setActiveUserId(parsedResponse.data._id);
@@ -112,7 +117,6 @@ class RegisterAndLogin extends React.Component {
 			}
 		} else {
 			console.log("--password was too short--");
-
 			this.setState({
 				showMessage: true,
 				message: "You're password must be six characters in length or more"
