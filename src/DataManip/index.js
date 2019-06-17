@@ -26,9 +26,9 @@ class DataManip extends React.Component {
 
 		return (
 			<div>
-				Grand total: ${this.props.expenseOldTot.toFixed(2)}
+				Grand total: {this.props.expenseOldTot.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }
 				<p/>
-				Average Expense: ${ avgExp.toFixed(2) }
+				Average Expense: { avgExp.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) } 
 			</div>
 
 		)

@@ -216,12 +216,12 @@ class Expenses extends React.Component {
 				cutDate.push(fullDate.charAt(i))
 			}
 			const cutDateSring = cutDate.join('');
-			const float = entry.amount.toFixed(2)
+			const float = entry.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) 
 			return (
 				 <tr key={entry._id}> 
 					<td className="dateBox"> {cutDateSring} </td> 
 					<td> {entry.category.name} </td> 
-					<td> ${float} </td> 
+					<td> {float} </td> 
 					<td className="editButton"> <button data-id={entry._id} data-date={entry.date} data-amount={float} data-cat={entry.category.name} onClick={this.openUpdateFunction}> Edit </button> </td>
 					<td className="editButton"> <button data-id={entry._id} onClick={this.deleteExpense}> Delete </button> </td>
 				 </tr>
