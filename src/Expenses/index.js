@@ -131,7 +131,7 @@ class Expenses extends React.Component {
 		this.setState({
 			editId: e.currentTarget.dataset.id,
 			editAmount: e.currentTarget.dataset.amount,
-			editDate: e.currentTarget.dataset.date,
+			editDate: e.currentTarget.dataset.date.substring(2,10),
 			category: this.props.categories[this.state.catIterator],
 			showExpenseUpdateModal: true,
 		})
@@ -146,9 +146,11 @@ class Expenses extends React.Component {
 		this.setState({
 			showExpenseUpdateModal: false,
 		})
+		const properDate = '20'.concat(this.state.editDate)
+		const properAmount = this.state.editAmount.replace(/[,$]/g, '');
 		const bodyToSend = {
-			amount: this.state.editAmount,
-			date: this.state.editDate,
+			amount: properAmount,
+			date: properDate,
 			category: this.props.categories[this.state.catIterator],
 		}
 		try {
@@ -194,7 +196,7 @@ class Expenses extends React.Component {
 			<div>
 				<form id="expense-form" onSubmit={this.createExpense}>
 					Date:
-					<input type='text' name='date' value={this.state.date} placeholder='yyyy-mm-dd' onChange={this.handleChange}/>
+					<input type='text' name='date' value={this.state.date} placeholder='yy-mm-dd' onChange={this.handleChange}/>
 
 					Category:
 					<select onChange={this.handleSelectChange}>
