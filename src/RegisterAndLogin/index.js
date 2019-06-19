@@ -149,9 +149,13 @@ class RegisterAndLogin extends React.Component {
 
 	render() {
 		const Message = (
-			<p>
+			<p className="message">
 				{this.state.message}
 			</p>
+		)
+
+		const noMessage = (
+			<p className="noMessage"/>
 		)
 
 		const Login = (
@@ -162,7 +166,7 @@ class RegisterAndLogin extends React.Component {
 					<input type='text' name='email' value={this.state.email} onChange={this.handleChange}/>
 					Password:
 					<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
-					{this.state.showMessage ? Message : <p>Should have the same diameters as the message div</p>}
+					{this.state.showMessage ? Message : noMessage}
 					<button> Log in </button>
 				</form>
 				<p> Don't have an account? Set one up now! It's free and easy. </p>
@@ -183,7 +187,7 @@ class RegisterAndLogin extends React.Component {
 						Password:
 						<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
 					</div>
-					{this.state.showMessage ? Message : <p>Should have the same diameters as the message div</p>}
+					{this.state.showMessage ? Message : noMessage}
 					<button type='sumbit'>Register</button>
 				</form>
 				<p> You have an account after all? </p>

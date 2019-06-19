@@ -5,3 +5,12 @@ input {
 .logForm {
 	margin: 16px;
 }
+
+.message {
+	font-size: 12px;
+	color: red;
+}
+
+.noMessage {
+	min-height: 15px;
+}
