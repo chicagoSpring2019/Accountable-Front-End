@@ -257,7 +257,7 @@ class Expenses extends React.Component {
       					<Label>
         					Update the expense:
       					</Label>
-      					<Form.Input type='text' name='editDate' value={this.state.editDate} onChange={this.handleChange}/>
+      					<Form.Input type='text' name='editDate' value={this.state.editDate.substring(0, 10)} onChange={this.handleChange}/>
       					<select onChange={this.handleSelectChange}>
 							{optionsToInsert}
 						</select>

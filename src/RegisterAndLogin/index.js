@@ -166,8 +166,8 @@ class RegisterAndLogin extends React.Component {
 					<input type='text' name='email' value={this.state.email} onChange={this.handleChange}/>
 					Password:
 					<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
-					{this.state.showMessage ? Message : noMessage}
 					<button> Log in </button>
+					{this.state.showMessage ? Message : noMessage}
 				</form>
 				<p> Don't have an account? Set one up now! It's free and easy. </p>
 				<button onClick={this.showRegisterForm}> Sign up </button>
@@ -186,9 +186,9 @@ class RegisterAndLogin extends React.Component {
 					<div className="logForm">
 						Password:
 						<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
+					<button type='sumbit'>Register</button>
 					</div>
 					{this.state.showMessage ? Message : noMessage}
-					<button type='sumbit'>Register</button>
 				</form>
 				<p> You have an account after all? </p>
 				<button onClick={this.hideRegisterForm} > Login </button>
