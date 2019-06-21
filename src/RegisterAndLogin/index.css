@@ -14,3 +14,7 @@ input {
 .noMessage {
 	min-height: 15px;
 }
+
+.button {
+	min-width: 60px;
+}

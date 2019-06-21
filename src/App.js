@@ -4,6 +4,7 @@ import RegisterAndLogin from './RegisterAndLogin/index'
 import CategoryList from './CategoryList/index'
 import Expenses from './Expenses/index'
 import DataManip from './DataManip/index'
+import ViewByCat from './ViewByCat/index'
 
 class App extends React.Component {
 	constructor() {
@@ -143,6 +144,7 @@ class App extends React.Component {
 		  			<h1>  Accountable  </h1>
 					{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUserEmailAndLogged={this.setActiveUserEmailAndLogged} setActiveUserId={this.setActiveUserId} /> }
 					{ this.state.logged ? <DataManip expenseOldTot={this.state.expenseOldTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories}/> : null }
+					{ this.state.logged ? <ViewByCat expenseOldTot={this.state.expenseOldTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories}/> : null }
 		  			{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} 
 		  			retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal} loadCatList={this.loadCatList} /> : null }
 	

@@ -1,4 +1,6 @@
 import React from 'react';
+import './index.css';
+
 
 
 
@@ -26,9 +28,12 @@ class DataManip extends React.Component {
 
 		return (
 			<div>
-				Grand total: {this.props.expenseOldTot.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }
-				<p/>
-				Average Expense: { avgExp.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) } 
+				<p className="figure">
+					Grand total: {this.props.expenseOldTot.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }
+				</p>
+				<p className="figure">
+					Average Expense: { avgExp.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) } 
+				</p>
 			</div>
 
 		)
