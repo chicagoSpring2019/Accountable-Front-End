@@ -14,34 +14,36 @@ class ViewByCat extends React.Component {
 		}
 	}
 
+	componentDidMount() {
+		this.setState = ({
+			options: [{
+				_id: 12345,
+				name: "All"
+			}]
+		})
+	}
 
 	retrieval = async (e) => {
 		e.preventDefault();
-
-
 		let cats = [];
 		cats = this.props.categories;
 
 		console.log(this.props.categories);
 		console.log(cats, "< felines@")
+
 		const all = ({
-						_id: 12345,
+						_id: '12345',
 						name: 'All'
 					});
-		const categoriesPlusAll = cats.push(all);
-		console.log(categoriesPlusAll, "<=== categoriesPlusAll")
+
+		const categoriesPlusAll = [...cats, all];
+		console.log(categoriesPlusAll, "<=== categoriesPlusAll");
 
 
 		await this.setState({
 			options: categoriesPlusAll,
 		})
-
-
-
-
 	}
-
-
 
 
 
@@ -49,9 +51,7 @@ class ViewByCat extends React.Component {
 		
 		const optionsToInsert = this.state.options.map((op, i) => {
 			return (
-				<div>
 				<option key={i} value={i} > {op.name} </option>
-				</div>
 			)
 		})
 
@@ -60,7 +60,7 @@ class ViewByCat extends React.Component {
 			<div>
 				<form>
 					<p>View your expenses by Category
-						<select onClick={this.retrieval} onChange={this.handleSelectChange}>
+						<select defaultValue="All" onClick={this.retrieval} onChange={this.handleSelectChange}>
 							{optionsToInsert}
 						</select>
 					</p>
