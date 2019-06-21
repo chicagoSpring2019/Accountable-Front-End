@@ -13,35 +13,38 @@ class ViewByCat extends React.Component {
 	}
 
 
-	componentDidMount() {
-		this.setState({
-			optionsPlusAll: this.props.categories
-		})
-		console.log(this.state, "<<<<state in viewby cat");
-		console.log(this.props.categories);
-	}
+	// componentDidMount() {
+	// 	this.setState({
+	// 		optionsPlusAll: this.props.categories
+	// 	})
+	// 	console.log(this.state, "<<<<state in viewby cat");
+	// 	console.log(this.props.categories);
+	// }
 
 
 
 
 
 	render() {
+		let options = []
+		console.log(this.props.categories, "<<< prop categories!!");
+		options = this.props.categories;
+		const optionsPlusAll = options.push({name: 'all'})
+		console.log(optionsPlusAll, "<=== optionsPlusAll");
+		// const optionsToInsert = optionsPlusAll.map((op, i) => {
+		// 	return (
+		// 		<option key={i} value={i} > {op.name} </option>
+		// 	)
+		// })
 
-		const optionsToInsert = this.state.optionsPlusAll.map((op, i) => {
-			// optionsToInsert.push({name: 'all'})
-			return (
-				<option key={i} value={i} > {op.name} </option>
-			)
-		})
 
-
+							// {optionsToInsert}
 
 		const selector = (
 			<div>
 				<form>
 					<p>View your expenses by Category
 						<select onChange={this.handleSelectChange}>
-							{optionsToInsert}
 						</select>
 					</p>
 					<button>Filter</button>
