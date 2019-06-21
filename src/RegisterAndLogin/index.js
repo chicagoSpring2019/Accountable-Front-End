@@ -8,21 +8,13 @@ class RegisterAndLogin extends React.Component {
 			email: '',
 			password: '',
 			showRegister: false,
-			message: '',
-			showMessage: false,
-		}
+			message: '',		}
 	}
 
 	handleChange = (e) => {
 		this.setState({[e.target.name]: e.target.value});
 	}
 
-	showMessage = () => {
-		console.log(" ");
-		this.setState({
-			showMessage: true
-		})
-	}
 
 	clearForm = () => {
 		this.setState({
@@ -34,7 +26,8 @@ class RegisterAndLogin extends React.Component {
 	showRegisterForm = () => {
 		this.clearForm();
 		this.setState({
-			showRegister: true
+			showRegister: true,
+			message:'',
 		})
 	}
 
@@ -42,48 +35,48 @@ class RegisterAndLogin extends React.Component {
 		this.clearForm();
 		this.setState({
 			showRegister: false,
-			showMessage: false,
+			message: '',
 		})
 	}
 
 	handleLogin = async (e) => {
 		e.preventDefault();
 		console.log('--handleLogin() initiated--');
-		this.showMessage();
-		try {
-			const bodyToSend = {
-				email: this.state.email,
-				password: this.state.password
-			}
-
-		  	const loginResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/login', {
-				method: 'POST',
-				credentials: 'include',
-				body: JSON.stringify(bodyToSend),
-				headers: {
-				  	'Content-Type': 'application/json'
+		if (this.state.password === '' || this.state.email === '') {
+			this.setState({
+				message: "You must input an email and password to login"
+			})
+		} else {
+			try {
+				const bodyToSend = {
+					email: this.state.email,
+					password: this.state.password
 				}
-		  	});
-		  	this.clearForm();
-		  	console.log(loginResponse, "<<--- loginResponse");
-		  	const parsedResponse = await loginResponse.json();
-		  	console.log(parsedResponse, "<=-=-= parsedResponse");
-		  	if (parsedResponse.status === 200) {
-				this.setState({
-					showMessage: true,
-					message: "Logging in...",
-				})
-				await this.props.setActiveUserEmailAndLogged(parsedResponse.data.email);
-				this.props.setActiveUserId(parsedResponse.data._id);
-			} else if (parsedResponse.status === 404) {
-				console.log(parsedResponse.message, '<<< parsedResponse.message in handleLogin()');
-				this.setState({
-					showMessage: true,
-					message: parsedResponse.message
-				})
-		  	}
-		} catch(err) {
-		  	console.log(err);
+
+			  	const loginResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/login', {
+					method: 'POST',
+					credentials: 'include',
+					body: JSON.stringify(bodyToSend),
+					headers: {
+					  	'Content-Type': 'application/json'
+					}
+			  	});
+			  	this.clearForm();
+			  	const parsedResponse = await loginResponse.json();
+			  	if (parsedResponse.status === 200) {
+					this.setState({
+						message: "Logging in...",
+					})
+					await this.props.setActiveUserEmailAndLogged(parsedResponse.data.email);
+					this.props.setActiveUserId(parsedResponse.data._id);
+				} else if (parsedResponse.status === 404) {
+					this.setState({
+						message: parsedResponse.message
+					})
+			  	}
+			} catch(err) {
+			  	console.log(err);
+			}
 		}
   	}
 
@@ -94,7 +87,6 @@ class RegisterAndLogin extends React.Component {
 			try {
 				await this.setState({
 					message: "Creating account...",
-					showMessage: true,
 				})
 				const registerResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/register',  {
 					method: 'POST',
@@ -106,7 +98,6 @@ class RegisterAndLogin extends React.Component {
 				})
 				this.clearForm();
 				const parsedResponse = await registerResponse.json();
-				console.log(parsedResponse, "<----  parsedResponse in handleRegister()");
 				if(parsedResponse.status === 200) {
 					await this.createDefaultCats(parsedResponse.data._id);
 					this.props.setActiveUserEmailAndLogged(parsedResponse.data.email);
@@ -118,7 +109,6 @@ class RegisterAndLogin extends React.Component {
 		} else {
 			console.log("--password was too short--");
 			this.setState({
-				showMessage: true,
 				message: "You're password must be six characters in length or more"
 			})
 		}
@@ -141,10 +131,6 @@ class RegisterAndLogin extends React.Component {
 				'Content-Type': 'application/json'
 			}
 		})
-
-		const parsedCatsResponse = await catsResponse.json()
-		console.log(parsedCatsResponse, "<<<< parsedCats in REg and Login .js");
-
 	}
 
 	render() {
@@ -167,7 +153,7 @@ class RegisterAndLogin extends React.Component {
 					Password:
 					<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
 					<button className="button"> Log in </button>
-					{this.state.showMessage ? Message : noMessage}
+					{this.state.message === '' ? noMessage : Message}
 				</form>
 				<p> Don't have an account? Set one up now! It's free and easy. </p>
 				<button onClick={this.showRegisterForm}> Sign up </button>
@@ -183,7 +169,7 @@ class RegisterAndLogin extends React.Component {
 					Password:
 					<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
 					<button className="button">Register</button>
-					{this.state.showMessage ? Message : noMessage}
+					{this.state.message === '' ? noMessage : Message}
 				</form>
 				<p> You have an account after all? </p>
 				<button className="button" onClick={this.hideRegisterForm} > Login </button>

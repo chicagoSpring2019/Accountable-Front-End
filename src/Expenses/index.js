@@ -43,10 +43,6 @@ class Expenses extends React.Component {
 
 	deleteExpense = async (e) => {
 		try {
-
-			console.log("entry id hopefully:")
-			console.log(e.currentTarget.dataset.id);
-
 			const deleteResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/expense/' + e.currentTarget.dataset.id, {
 				method: 'DELETE',
 				credentials: 'include',
@@ -79,7 +75,6 @@ class Expenses extends React.Component {
 			})
 			this.clearForm();
 			const parsedResponse = await entryResponse.json();
-			console.log(parsedResponse, "<<< parsed entry resposne <<<");
 			await this.props.retrieveExpensesAndCategories();
 			this.props.loadTotal();
 			
@@ -111,12 +106,10 @@ class Expenses extends React.Component {
 				}
 			})
 			const parsedResponse = await entryResponse.json();
-			console.log(parsedResponse, "<<< parsed entry resposne <<<");
 			this.props.retrieveExpensesAndCategories();
 			this.setState({
 				showCatCreateModal: false
 			})
-			console.log("about to load cat list");
 			this.props.loadCatList();
 		} catch(err) {
 			console.log(err);
@@ -163,7 +156,6 @@ class Expenses extends React.Component {
 				}
 			})
 			const parsedResponse = await entryResponse.json();
-			console.log(parsedResponse, "<<< parsed entry resposne <<<");
 			await this.props.retrieveExpensesAndCategories();
 			this.props.loadTotal()
 		} catch(err) {
@@ -185,7 +177,6 @@ class Expenses extends React.Component {
 
 
 	render() {
-
 		const optionsToInsert = this.props.categories.map((op, i) => {
 			return (
 				<option key={i} value={i} > {op.name} </option>
@@ -288,7 +279,7 @@ class Expenses extends React.Component {
 								<th>DATE</th>
 								<th className="catBox">CATEGORY</th>
 								<th>AMOUNT</th>
-								<th colspan="2"> Editing </th>
+								<th> Editing </th>
 							</tr>
 						</thead>
 						<tbody>

@@ -8,43 +8,60 @@ class ViewByCat extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			optionsPlusAll: []
+			options: [],
+
+
 		}
 	}
 
 
-	// componentDidMount() {
-	// 	this.setState({
-	// 		optionsPlusAll: this.props.categories
-	// 	})
-	// 	console.log(this.state, "<<<<state in viewby cat");
-	// 	console.log(this.props.categories);
-	// }
+	retrieval = async (e) => {
+		e.preventDefault();
+
+
+		let cats = [];
+		cats = this.props.categories;
+
+		console.log(this.props.categories);
+		console.log(cats, "< felines@")
+		const all = ({
+						_id: 12345,
+						name: 'All'
+					});
+		const categoriesPlusAll = cats.push(all);
+		console.log(categoriesPlusAll, "<=== categoriesPlusAll")
+
+
+		await this.setState({
+			options: categoriesPlusAll,
+		})
+
+
+
+
+	}
 
 
 
 
 
 	render() {
-		let options = []
-		console.log(this.props.categories, "<<< prop categories!!");
-		options = this.props.categories;
-		const optionsPlusAll = options.push({name: 'all'})
-		console.log(optionsPlusAll, "<=== optionsPlusAll");
-		// const optionsToInsert = optionsPlusAll.map((op, i) => {
-		// 	return (
-		// 		<option key={i} value={i} > {op.name} </option>
-		// 	)
-		// })
+		
+		const optionsToInsert = this.state.options.map((op, i) => {
+			return (
+				<div>
+				<option key={i} value={i} > {op.name} </option>
+				</div>
+			)
+		})
 
-
-							// {optionsToInsert}
 
 		const selector = (
 			<div>
 				<form>
 					<p>View your expenses by Category
-						<select onChange={this.handleSelectChange}>
+						<select onClick={this.retrieval} onChange={this.handleSelectChange}>
+							{optionsToInsert}
 						</select>
 					</p>
 					<button>Filter</button>

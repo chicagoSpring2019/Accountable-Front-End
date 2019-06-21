@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import RegisterAndLogin from './RegisterAndLogin/index'
-import CategoryList from './CategoryList/index'
 import Expenses from './Expenses/index'
 import DataManip from './DataManip/index'
 import ViewByCat from './ViewByCat/index'
@@ -16,8 +15,6 @@ class App extends React.Component {
 			categories: [],
 			expenses: [],
 			expenseOldTot: 0,
-			catNameList: [],
-			categoryTotals: [],
 		}
 	}
 
@@ -29,7 +26,6 @@ class App extends React.Component {
 				ex.amount
 			)
 		})
-		console.log(expenses, "<--- expenses");
 		let newNum = 0;
 		for(let i = 0; i < expenses.length; i++ ) {
 			newNum += expenses[i];			
@@ -39,25 +35,8 @@ class App extends React.Component {
 		})
 	}
 
-	loadCatList = async () => {
-
-		const catNameList = await this.state.expenses.map((item) => {
-			return (
-				item.category.name , item.amount
-			)
-		})
-		this.setState({
-			catNameList: catNameList
-		})
-		console.log(this.state.catNameList);
-		console.log('^^^^^^ catNameList in state in loadCatList ^^^^^^');
-		console.log(' ');
-	}
-
-	
 
 	setActiveUserEmailAndLogged = (email) =>	{
-		console.log(email, "<<< the submitted email address in setActiveUser");
 		try {
 			this.setState({
 				activeUserEmail: email,
@@ -69,14 +48,12 @@ class App extends React.Component {
 	}
 
 	setActiveUserId = async (id) => {
-		console.log(id, "<< the submitted id in setActiveUserId");
 		try {
 			this.setState({
 				activeUserId: id
 			})
 			await this.retrieveExpensesAndCategories();
 			this.loadTotal();
-			this.loadCatList();
 		} catch(err) {
 			console.log(err);
 		}
@@ -85,15 +62,11 @@ class App extends React.Component {
 	retrieveExpensesAndCategories = async () => {
 		console.log("--retrieveExpensesAndCategories() has been initiated--");
 		try {
-			console.log(this.state.activeUserId, "<<<< this.state.activeUserId");
 			const expenseResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/user/' + this.state.activeUserId)
 			const categoryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'category/user/' + this.state.activeUserId)
 			const parsedExpenseResponse = await expenseResponse.json();
 			const parsedCategoryResponse = await categoryResponse.json();
-			console.log(parsedCategoryResponse.data,"<--- parsedCategoryResponse");
-			console.log(parsedExpenseResponse.data, "<=== parsedExpenseResponse");
 			this.setState({
-				categoryTotals: parsedCategoryResponse.data.name,
 				categories: parsedCategoryResponse.data,
 				expenses: parsedExpenseResponse.data
 			})
@@ -106,7 +79,6 @@ class App extends React.Component {
 		console.log("--Log out has been initiated--");
 		try {
 			const logOutResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/logout')
-			console.log(logOutResponse, "<<< logOutResponse <<<");
 			this.setState({
 				activeUserEmail: null,
 				activeUserId: null,				
@@ -146,7 +118,7 @@ class App extends React.Component {
 					{ this.state.logged ? <DataManip expenseOldTot={this.state.expenseOldTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories}/> : null }
 					{ this.state.logged ? <ViewByCat expenseOldTot={this.state.expenseOldTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories}/> : null }
 		  			{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} 
-		  			retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal} loadCatList={this.loadCatList} /> : null }
+		  			retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal}  /> : null }
 	
 		  			<h6 class="spacer">© Gregory Gancarz - 2019</h6>
 		  		</div>
