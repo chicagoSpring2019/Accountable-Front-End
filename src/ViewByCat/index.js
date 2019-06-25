@@ -29,7 +29,6 @@ class ViewByCat extends React.Component {
 
 
 	render() {
-		
 		const optionsToInsert = this.props.categories.map((op, i) => {
 			return (
 				<option key={i} value={i} > {op.name} </option>
@@ -43,6 +42,7 @@ class ViewByCat extends React.Component {
 					<p>View your expenses by Category
 						<select onChange={this.handleSelectChange}>
 							{optionsToInsert}
+							<option key='0' value='All' > All </option>
 						</select>
 					</p>
 					<button>Filter</button>
