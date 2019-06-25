@@ -16,10 +16,6 @@ class ViewByCat extends React.Component {
 	}
 
 
-	componentDidMount() {
-		console.log(this.props.categories, "<<< props.options")
-	}
-
 
 	handleSelectChange = async (e) => {
 		console.log("--handleSelectChange initiated--");
@@ -34,7 +30,7 @@ class ViewByCat extends React.Component {
 
 	render() {
 		
-		const optionsToInsert = this.state.options.map((op, i) => {
+		const optionsToInsert = this.props.categories.map((op, i) => {
 			return (
 				<option key={i} value={i} > {op.name} </option>
 			)
