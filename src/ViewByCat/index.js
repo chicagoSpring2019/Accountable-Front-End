@@ -9,41 +9,26 @@ class ViewByCat extends React.Component {
 		super();
 		this.state = {
 			options: [],
+			catIterator: 0,
 
 
 		}
 	}
 
+
 	componentDidMount() {
-		this.setState = ({
-			options: [{
-				_id: 12345,
-				name: "All"
-			}]
-		})
+		console.log(this.props.categories, "<<< props.options")
 	}
 
-	retrieval = async (e) => {
-		e.preventDefault();
-		let cats = [];
-		cats = this.props.categories;
 
-		console.log(this.props.categories);
-		console.log(cats, "< felines@")
-
-		const all = ({
-						_id: '12345',
-						name: 'All'
-					});
-
-		const categoriesPlusAll = [...cats, all];
-		console.log(categoriesPlusAll, "<=== categoriesPlusAll");
-
-
-		await this.setState({
-			options: categoriesPlusAll,
-		})
+	handleSelectChange = async (e) => {
+		console.log("--handleSelectChange initiated--");
+		this.setState({
+			catIterator: e.target.value
+		});
 	}
+
+	
 
 
 
@@ -60,7 +45,7 @@ class ViewByCat extends React.Component {
 			<div>
 				<form>
 					<p>View your expenses by Category
-						<select defaultValue="All" onClick={this.retrieval} onChange={this.handleSelectChange}>
+						<select onChange={this.handleSelectChange}>
 							{optionsToInsert}
 						</select>
 					</p>

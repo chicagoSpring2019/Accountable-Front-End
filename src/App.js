@@ -36,20 +36,11 @@ class App extends React.Component {
 	}
 
 
-	setActiveUserEmailAndLogged = (email) =>	{
+	setActiveUser = async (email, id) =>	{
 		try {
-			this.setState({
+			await this.setState({
 				activeUserEmail: email,
 				logged: true,
-			})
-		} catch(err) {
-			console.log(err);
-		}
-	}
-
-	setActiveUserId = async (id) => {
-		try {
-			this.setState({
 				activeUserId: id
 			})
 			await this.retrieveExpensesAndCategories();
@@ -58,6 +49,8 @@ class App extends React.Component {
 			console.log(err);
 		}
 	}
+
+
 
 	retrieveExpensesAndCategories = async () => {
 		console.log("--retrieveExpensesAndCategories() has been initiated--");
@@ -114,7 +107,7 @@ class App extends React.Component {
 			<div className="App">
 				<div className="main">
 		  			<h1>  Accountable  </h1>
-					{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUserEmailAndLogged={this.setActiveUserEmailAndLogged} setActiveUserId={this.setActiveUserId} /> }
+					{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUser={this.setActiveUser} /> }
 					{ this.state.logged ? <DataManip expenseOldTot={this.state.expenseOldTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories}/> : null }
 					{ this.state.logged ? <ViewByCat expenseOldTot={this.state.expenseOldTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories}/> : null }
 		  			{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} 

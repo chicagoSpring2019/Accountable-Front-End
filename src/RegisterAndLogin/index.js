@@ -67,8 +67,7 @@ class RegisterAndLogin extends React.Component {
 					this.setState({
 						message: "Logging in...",
 					})
-					await this.props.setActiveUserEmailAndLogged(parsedResponse.data.email);
-					this.props.setActiveUserId(parsedResponse.data._id);
+					await this.props.setActiveUser(parsedResponse.data.email, parsedResponse.data._id);
 				} else if (parsedResponse.status === 404) {
 					this.setState({
 						message: parsedResponse.message
