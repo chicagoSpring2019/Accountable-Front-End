@@ -17,8 +17,7 @@ class Expenses extends React.Component {
 			editAmount: 0,
 			editDate: '',
 			editId: '',
-			expenseOldTot: 0,
-			expenseNewTot: 0,
+			expenseTot: 0,
 		}
 	}
 

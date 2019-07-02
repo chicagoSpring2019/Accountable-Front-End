@@ -42,7 +42,7 @@ class ViewByCat extends React.Component {
 					<p>View your expenses by Category
 						<select onChange={this.handleSelectChange}>
 							{optionsToInsert}
-							<option key='0' value='All' > All </option>
+							<option key='All' value='All' > All </option>
 						</select>
 					</p>
 					<button>Filter</button>

@@ -21,7 +21,7 @@ class DataManip extends React.Component {
 			)
 		})
 
-		const avgExp = this.props.expenseOldTot.toFixed(2) / this.props.expenses.length.toFixed(2)
+		const avgExp = this.props.expenseTot.toFixed(2) / this.props.expenses.length.toFixed(2)
 
 		const avgWeeklyTot = []
 
@@ -29,7 +29,7 @@ class DataManip extends React.Component {
 		return (
 			<div>
 				<p className="figure">
-					Grand total: {this.props.expenseOldTot.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }
+					Grand total: {this.props.expenseTot.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }
 				</p>
 				<p className="figure">
 					Average Expense: { avgExp.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) } 

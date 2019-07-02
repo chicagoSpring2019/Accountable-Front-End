@@ -14,7 +14,7 @@ class App extends React.Component {
 			activeUserId: null,
 			categories: [],
 			expenses: [],
-			expenseOldTot: 0,
+			expenseTot: 0,
 		}
 	}
 
@@ -31,7 +31,7 @@ class App extends React.Component {
 			newNum += expenses[i];			
 		}
 		this.setState({
-			expenseOldTot: newNum
+			expenseTot: newNum
 		})
 	}
 
@@ -52,7 +52,7 @@ class App extends React.Component {
 
 
 
-	retrieveExpensesAndCategories = async () => {
+	retrieveExpensesAndCategories = async (iterator) => {
 		console.log("--retrieveExpensesAndCategories() has been initiated--");
 		try {
 			const expenseResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/user/' + this.state.activeUserId)
@@ -108,8 +108,8 @@ class App extends React.Component {
 				<div className="main">
 		  			<h1>  Accountable  </h1>
 					{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUser={this.setActiveUser} /> }
-					{ this.state.logged ? <DataManip expenseOldTot={this.state.expenseOldTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories}/> : null }
-					{ this.state.logged ? <ViewByCat expenseOldTot={this.state.expenseOldTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} activeUserId={this.state.activeUserId} /> : null }
+					{ this.state.logged ? <DataManip expenseTot={this.state.expenseTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories}/> : null }
+					{ this.state.logged ? <ViewByCat expenseTot={this.state.expenseTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} activeUserId={this.state.activeUserId} /> : null }
 		  			{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} 
 		  			retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal}  /> : null }
 	
