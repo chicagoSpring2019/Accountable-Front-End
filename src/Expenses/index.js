@@ -25,15 +25,6 @@ class Expenses extends React.Component {
 		this.setState({[e.target.name]: e.target.value});
 	}
 
-
-	handleSelectChange = async (e) => {
-		console.log("--handleSelectChange initiated--");
-		this.setState({
-			catIterator: e.target.value
-		});
-	}
-
-
 	clearForm = () => {
 		this.setState({
 			amount: '',
@@ -57,9 +48,11 @@ class Expenses extends React.Component {
 
 	createExpense = async (e) => {
 		e.preventDefault()
+		const properDate = '20'.concat(this.state.date)
+		console.log(this.state.date, this.state.properDate)
 		const bodyToSend = {
 			amount: this.state.amount,
-			date: this.state.date,
+			date: this.state.properDate,
 			category: this.props.categories[this.state.catIterator],
 		}
 		console.log("--Expense entry creation has been initiated--");
@@ -189,7 +182,7 @@ class Expenses extends React.Component {
 					<input type='text' name='date' value={this.state.date} placeholder='yy-mm-dd' onChange={this.handleChange}/>
 
 					Category:
-					<select onChange={this.handleSelectChange}>
+					<select name='catIterator' onChange={this.handleChange}>
 						{optionsToInsert}
 					</select>
 
