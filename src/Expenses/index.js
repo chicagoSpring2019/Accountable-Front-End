@@ -18,6 +18,7 @@ class Expenses extends React.Component {
 			editDate: '',
 			editId: '',
 			expenseTot: 0,
+			message: '',
 		}
 	}
 
@@ -48,30 +49,39 @@ class Expenses extends React.Component {
 
 	createExpense = async (e) => {
 		e.preventDefault()
-		const properDate = '20'.concat(this.state.date)
-		console.log(this.state.date, this.state.properDate)
-		const bodyToSend = {
-			amount: this.state.amount,
-			date: this.state.properDate,
-			category: this.props.categories[this.state.catIterator],
-		}
-		console.log("--Expense entry creation has been initiated--");
-		try {
-			const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/user/' + this.props.activeUserId,  {
-				method: 'POST',
-				credentials: 'include',
-				body: JSON.stringify(bodyToSend),
-				headers: {
-					'Content-Type': 'application/json'
-				}
+		if (this.state.date.length !== 8) {
+			this.setState({
+				message: "Please format the date correctly (yy-mm-dd)"
 			})
-			this.clearForm();
-			const parsedResponse = await entryResponse.json();
-			await this.props.retrieveExpensesAndCategories();
-			this.props.loadTotal();
-			
-		} catch(err) {
-			console.log(err);
+		} else {
+			this.setState({
+				message: ''
+			})
+			const properDate = '20'.concat(this.state.date)
+			console.log(this.state.date, properDate)
+			const bodyToSend = {
+				amount: this.state.amount,
+				date: properDate,
+				category: this.props.categories[this.state.catIterator],
+			}
+			console.log("--Expense entry creation has been initiated--");
+			try {
+				const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/user/' + this.props.activeUserId,  {
+					method: 'POST',
+					credentials: 'include',
+					body: JSON.stringify(bodyToSend),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				})
+				this.clearForm();
+				const parsedResponse = await entryResponse.json();
+				await this.props.retrieveExpensesAndCategories();
+				this.props.loadTotal();
+				
+			} catch(err) {
+				console.log(err);
+			}
 		}
 	}
 
@@ -127,31 +137,38 @@ class Expenses extends React.Component {
 
 	updateExpenseF = async (e) => {
 		e.preventDefault();
-		console.log("--Expense update has been initiated--");
-		this.setState({
-			showExpenseUpdateModal: false,
-		})
-		const properDate = '20'.concat(this.state.editDate)
-		const properAmount = this.state.editAmount.replace(/[,$]/g, '');
-		const bodyToSend = {
-			amount: properAmount,
-			date: properDate,
-			category: this.props.categories[this.state.catIterator],
-		}
-		try {
-			const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/expense/' + this.state.editId,  {
-				method: 'PUT',
-				credentials: 'include',
-				body: JSON.stringify(bodyToSend),
-				headers: {
-					'Content-Type': 'application/json'
-				}
+		if (this.state.editDate.length !== 8) {
+			this.setState({
+				message: "Please format the date correctly (yy-mm-dd)"
 			})
-			const parsedResponse = await entryResponse.json();
-			await this.props.retrieveExpensesAndCategories();
-			this.props.loadTotal()
-		} catch(err) {
-			console.log(err);
+		} else {
+			console.log("--Expense update has been initiated--");
+			this.setState({
+				showExpenseUpdateModal: false,
+				message: '',
+			})
+			const properDate = '20'.concat(this.state.editDate)
+			const properAmount = this.state.editAmount.replace(/[,$]/g, '');
+			const bodyToSend = {
+				amount: properAmount,
+				date: properDate,
+				category: this.props.categories[this.state.catIterator],
+			}
+			try {
+				const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/expense/' + this.state.editId,  {
+					method: 'PUT',
+					credentials: 'include',
+					body: JSON.stringify(bodyToSend),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				})
+				const parsedResponse = await entryResponse.json();
+				await this.props.retrieveExpensesAndCategories();
+				this.props.loadTotal()
+			} catch(err) {
+				console.log(err);
+			}
 		}
 	}
 
@@ -175,8 +192,19 @@ class Expenses extends React.Component {
 			)
 		})
 
-		const expenseForm = (
+		const Message = (
+			<p className="message">
+				{this.state.message}
+			</p>
+		)
+
+		const noMessage = (
+			<p className="noMessage"/>
+		)
+
+		const ExpenseForm = (
 			<div>
+				{this.state.message === '' ? noMessage : Message}
 				<form id="expense-form" onSubmit={this.createExpense}>
 					Date:
 					<input type='text' name='date' value={this.state.date} placeholder='yy-mm-dd' onChange={this.handleChange}/>
@@ -194,7 +222,7 @@ class Expenses extends React.Component {
 			</div>
 		)
 
-		const expenseLog = this.props.expenses.map((entry) => {
+		const ExpenseLog = this.props.expenses.map((entry) => {
 			const fullDate = entry.date;
 			const cutDate = [];
 			for (let i = 2; i < 10; i++) {
@@ -213,7 +241,7 @@ class Expenses extends React.Component {
 			)
 		})
 
-		const createCatModal = (
+		const CreateCatModal = (
 
 				<Modal open={this.state.showCatCreateModal}>
       				<Modal.Content>
@@ -234,7 +262,7 @@ class Expenses extends React.Component {
 
 
 
-		const updateExpenseModal = (
+		const UpdateExpenseModal = (
 
 			<Modal open={this.state.showExpenseUpdateModal}>
   				<Modal.Content>
@@ -261,9 +289,9 @@ class Expenses extends React.Component {
 				<form onSubmit={this.setCatModalStateFunction}>
 					<button> Create new Category </button>
 				</form>
-				{createCatModal}
-				{updateExpenseModal}
-				{expenseForm}
+				{CreateCatModal}
+				{UpdateExpenseModal}
+				{ExpenseForm}
 				<div class="table-wrapper">
 					<table>
 						<thead>
@@ -275,7 +303,7 @@ class Expenses extends React.Component {
 							</tr>
 						</thead>
 						<tbody>
-							{expenseLog}
+							{ExpenseLog}
 						</tbody>
 					</table>
 				</div>

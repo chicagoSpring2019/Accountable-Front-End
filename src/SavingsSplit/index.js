@@ -16,6 +16,33 @@ class SavingsSplit extends React.Component {
 		this.setState({[e.target.name]: e.target.value});
 	}
 
+	createExpense = async (e) => {
+		e.preventDefault()
+		const bodyToSend = {
+			amount: this.state.amount,
+			date: this.state.date,
+			category: this.props.categories[this.state.catIterator],
+		}
+		console.log("--Expense entry creation has been initiated--");
+		try {
+			const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/user/' + this.props.activeUserId,  {
+				method: 'POST',
+				credentials: 'include',
+				body: JSON.stringify(bodyToSend),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			this.clearForm();
+			const parsedResponse = await entryResponse.json();
+			await this.props.retrieveExpensesAndCategories();
+			this.props.loadTotal();
+			
+		} catch(err) {
+			console.log(err);
+		}
+	}
+
 	render() {
 		const goalForm = (
 			<div>
