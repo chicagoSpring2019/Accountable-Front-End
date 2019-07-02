@@ -18,7 +18,8 @@ class Expenses extends React.Component {
 			editDate: '',
 			editId: '',
 			expenseTot: 0,
-			message: '',
+			messageNew: '',
+			messageEdit: '',
 		}
 	}
 
@@ -51,11 +52,11 @@ class Expenses extends React.Component {
 		e.preventDefault()
 		if (this.state.date.length !== 8) {
 			this.setState({
-				message: "Please format the date correctly (yy-mm-dd)"
+				messageNew: "Please format the date correctly (yy-mm-dd)"
 			})
 		} else {
 			this.setState({
-				message: ''
+				messageNew: ''
 			})
 			const properDate = '20'.concat(this.state.date)
 			console.log(this.state.date, properDate)
@@ -139,13 +140,14 @@ class Expenses extends React.Component {
 		e.preventDefault();
 		if (this.state.editDate.length !== 8) {
 			this.setState({
-				message: "Please format the date correctly (yy-mm-dd)"
+				messageEdit: "Please format the date correctly (yy-mm-dd)"
 			})
 		} else {
+
 			console.log("--Expense update has been initiated--");
 			this.setState({
 				showExpenseUpdateModal: false,
-				message: '',
+				messageEdit: '',
 			})
 			const properDate = '20'.concat(this.state.editDate)
 			const properAmount = this.state.editAmount.replace(/[,$]/g, '');
@@ -192,9 +194,15 @@ class Expenses extends React.Component {
 			)
 		})
 
-		const Message = (
+		const MessageNew = (
 			<p className="message">
-				{this.state.message}
+				{this.state.messageNew}
+			</p>
+		)
+
+		const MessageEdit = (
+			<p className="message">
+				{this.state.messageEdit}
 			</p>
 		)
 
@@ -204,7 +212,7 @@ class Expenses extends React.Component {
 
 		const ExpenseForm = (
 			<div>
-				{this.state.message === '' ? noMessage : Message}
+				{this.state.messageNew === '' ? noMessage : MessageNew}
 				<form id="expense-form" onSubmit={this.createExpense}>
 					Date:
 					<input type='text' name='date' value={this.state.date} placeholder='yy-mm-dd' onChange={this.handleChange}/>
@@ -266,6 +274,7 @@ class Expenses extends React.Component {
 
 			<Modal open={this.state.showExpenseUpdateModal}>
   				<Modal.Content>
+  					{this.state.messageEdit === '' ? noMessage : MessageEdit}
     				<Form onSubmit={this.updateExpenseF}>
       					<Label>
         					Update the expense:
