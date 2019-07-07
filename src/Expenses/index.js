@@ -238,6 +238,7 @@ class Expenses extends React.Component {
 			}
 			const cutDateSring = cutDate.join('');
 			const float = entry.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) 
+			if (entry.category.name === this.props.queryCategory || this.props.queryCategory === 'All') {
 			return (
 				 <tr key={entry._id}> 
 					<td className="dateBox"> {cutDateSring} </td> 
@@ -247,6 +248,7 @@ class Expenses extends React.Component {
 					<td className="editButton"> <button data-id={entry._id} onClick={this.deleteExpense}> Delete </button> </td>
 				 </tr>
 			)
+			}
 		})
 
 		const CreateCatModal = (

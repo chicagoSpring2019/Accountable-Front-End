@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.css';
 
-// send in categories inn props
+// send in categories in props
 
 
 class ViewByCat extends React.Component {
@@ -9,7 +9,7 @@ class ViewByCat extends React.Component {
 		super();
 		this.state = {
 			options: [],
-			catIterator: 0,
+			query: 0,
 
 
 		}
@@ -17,11 +17,12 @@ class ViewByCat extends React.Component {
 
 
 
-	handleSelectChange = async (e) => {
+	handleChange = async (e) => {
 		console.log("--handleSelectChange initiated--");
-		this.setState({
-			catIterator: e.target.value
-		});
+		await this.setState({[e.target.name]: e.target.value});
+		console.log(this.state.query, "<<< state query")
+		console.log(typeof this.state.query, "<<<< typeof");
+		this.props.retrieveExpensesByQuery(this.state.query)
 	}
 
 	
@@ -31,7 +32,7 @@ class ViewByCat extends React.Component {
 	render() {
 		const optionsToInsert = this.props.categories.map((op, i) => {
 			return (
-				<option key={i} value={i} > {op.name} </option>
+				<option key={i} value={op.name} > {op.name} </option>
 			)
 		})
 
@@ -40,7 +41,7 @@ class ViewByCat extends React.Component {
 			<div>
 				<form>
 					<p>View your expenses by Category
-						<select onChange={this.handleSelectChange}>
+						<select name='query' onChange={this.handleChange}>
 							{optionsToInsert}
 							<option key='All' value='All' > All </option>
 						</select>

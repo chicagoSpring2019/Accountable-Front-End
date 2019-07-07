@@ -15,6 +15,7 @@ class App extends React.Component {
 			categories: [],
 			expenses: [],
 			expenseTot: 0,
+			queryCategory: 'All',
 		}
 	}
 
@@ -68,6 +69,22 @@ class App extends React.Component {
 		}
 	}
 
+	retrieveExpensesByQuery = async (query) => {
+		console.log("--retrieveExpensesByQuery() has been initiated--");
+		try {
+			this.setState({
+				queryCategory: query,
+			})
+			// const expenseResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/user/' + this.state.activeUserId + '/' + query)
+			// const parsedExpenseResponse = await expenseResponse.json();
+			// this.setState({
+			// 	expenses: parsedExpenseResponse.data
+			// })
+		} catch(err) {
+			console.log(err);
+		}
+	}
+
 	logOutFunction = async () => {
 		console.log("--Log out has been initiated--");
 		try {
@@ -109,8 +126,9 @@ class App extends React.Component {
 		  			<h1>  Accountable  </h1>
 					{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUser={this.setActiveUser} /> }
 					{ this.state.logged ? <DataManip expenseTot={this.state.expenseTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories}/> : null }
-					{ this.state.logged ? <ViewByCat expenseTot={this.state.expenseTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} activeUserId={this.state.activeUserId} /> : null }
-		  			{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} 
+					{ this.state.logged ? <ViewByCat expenseTot={this.state.expenseTot} categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} activeUserId={this.state.activeUserId} 
+					retrieveExpensesByQuery={this.retrieveExpensesByQuery} /> : null }
+		  			{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} queryCategory={this.state.queryCategory}
 		  			retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal}  /> : null }
 	
 		  			<h6 class="spacer">© Gregory Gancarz - 2019</h6>
