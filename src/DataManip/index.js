@@ -32,7 +32,7 @@ class DataManip extends React.Component {
 					Grand total: {this.props.expenseTot.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }
 				</p>
 				<p className="figure">
-					Average Expense: { avgExp.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) } 
+					Average Expense: { avgExp === NaN ? 0 : avgExp.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) } 
 				</p>
 			</div>
 

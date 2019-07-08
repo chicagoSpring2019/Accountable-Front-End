@@ -99,8 +99,7 @@ class RegisterAndLogin extends React.Component {
 				const parsedResponse = await registerResponse.json();
 				if(parsedResponse.status === 200) {
 					await this.createDefaultCats(parsedResponse.data._id);
-					this.props.setActiveUserEmailAndLogged(parsedResponse.data.email);
-					this.props.setActiveUserId(parsedResponse.data._id);
+					this.props.setActiveUser(parsedResponse.data.email, parsedResponse.data._id);
 				}
 			} catch (err) {
 				console.log(err);
