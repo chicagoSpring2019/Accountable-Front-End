@@ -33,6 +33,13 @@ class Expenses extends React.Component {
 		})
 	}
 
+	closeModals = () => {
+		this.setState({
+			showExpenseUpdateModal: false,
+			showCatCreateModal: false,
+		})
+	}
+
 	deleteExpense = async (e) => {
 		try {
 			const deleteResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/expense/' + e.currentTarget.dataset.id, {
@@ -263,6 +270,7 @@ class Expenses extends React.Component {
           					
           					<Modal.Actions>
            						<Button>Create new Category</Button>
+           						<Button onClick={this.closeModals}>Cancel</Button>
           					</Modal.Actions>
         				</Form>
       				</Modal.Content>
@@ -288,6 +296,7 @@ class Expenses extends React.Component {
       					<Form.Input type='text' name='editAmount' value={this.state.editAmount} onChange={this.handleChange}/>          					
       					<Modal.Actions>
        						<Button>Update the modal</Button>
+       						<Button onClick={this.closeModals}>Cancel</Button>
       					</Modal.Actions>
     				</Form>
   				</Modal.Content>
