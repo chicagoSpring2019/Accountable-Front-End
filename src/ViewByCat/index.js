@@ -46,7 +46,6 @@ class ViewByCat extends React.Component {
 							<option key='All' value='All' > All </option>
 						</select>
 					</p>
-					<button>Filter</button>
 				</form>
 			</div>
 		)

@@ -6,9 +6,10 @@ class SavingsSplit extends React.Component {
 	constructor(props) {
 		super();
 		this.state = {
-			savingsGross: 0,
+			savingsGross: 100,
 			benchmark: 0,
 			percent: 0,
+			name: '',
 		}
 	}
 
@@ -16,16 +17,16 @@ class SavingsSplit extends React.Component {
 		this.setState({[e.target.name]: e.target.value});
 	}
 
-	createExpense = async (e) => {
+	createGoal = async (e) => {
 		e.preventDefault()
 		const bodyToSend = {
-			amount: this.state.amount,
-			date: this.state.date,
-			category: this.props.categories[this.state.catIterator],
+			benchmark: this.state.benchmark,
+			name: this.state.name,
+			percent: this.percent,
 		}
-		console.log("--Expense entry creation has been initiated--");
+		console.log("--Goal entry creation has been initiated--");
 		try {
-			const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/user/' + this.props.activeUserId,  {
+			const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'goal/user/' + this.props.activeUserId,  {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify(bodyToSend),
@@ -35,8 +36,8 @@ class SavingsSplit extends React.Component {
 			})
 			this.clearForm();
 			const parsedResponse = await entryResponse.json();
-			await this.props.retrieveExpensesAndCategories();
-			this.props.loadTotal();
+			console.log(parsedResponse);
+
 			
 		} catch(err) {
 			console.log(err);
@@ -50,13 +51,21 @@ class SavingsSplit extends React.Component {
 					Name:
 					<p>What are you saving for?</p>
 					<input type='text' name='name' value={this.state.name} placeholder='Vacation' onChange={this.handleChange}/>
+					<br/>
 					Percent:
 					<p>What percentage of your gross savings this month would you like to put towards this goal?</p>
 					<input type='text' name='percent' value={this.state.percent} placeholder='15' onChange={this.handleChange}/>
+					<br/>
 					Goal:
 					<p>Is there an amount you'd like to aim for with this goal?</p>
-					<input type='text' name='date' value={this.state.date} placeholder='100' onChange={this.handleChange}/>
+					<input type='text' name='benchmark' value={this.state.benchmark} placeholder='100' onChange={this.handleChange}/>
 				</form>
+			</div>
+		)
+
+		return (
+			<div>
+				{goalForm}
 			</div>
 		)
 
