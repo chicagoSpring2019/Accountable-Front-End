@@ -310,7 +310,7 @@ class Expenses extends React.Component {
 								<th>DATE</th>
 								<th className="catBox">CATEGORY</th>
 								<th>AMOUNT</th>
-								<th> Editing </th>
+								<th colspan="2"> Editing </th>
 							</tr>
 						</thead>
 						<tbody>
