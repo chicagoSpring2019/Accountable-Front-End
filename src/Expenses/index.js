@@ -258,25 +258,25 @@ class Expenses extends React.Component {
 			}
 		})
 
-		const CreateCatModal = (
+		// const CreateCatModal = (
 
-				<Modal open={this.state.showCatCreateModal}>
-      				<Modal.Content>
-        				<Form onSubmit={this.createCategory}>
-          					<Label>
-            					Create a new category:
-          					</Label>
-          					<Form.Input type='text' name='newName' value={this.state.newName} onChange={this.handleChange}/>
+		// 		<Modal open={this.state.showCatCreateModal}>
+  //     				<Modal.Content>
+  //       				<Form onSubmit={this.createCategory}>
+  //         					<Label>
+  //           					Create a new category:
+  //         					</Label>
+  //         					<Form.Input type='text' name='newName' value={this.state.newName} onChange={this.handleChange}/>
           					
-          					<Modal.Actions>
-           						<Button>Create new Category</Button>
-           						<Button onClick={this.closeModals}>Cancel</Button>
-          					</Modal.Actions>
-        				</Form>
-      				</Modal.Content>
-    			</Modal>
+  //         					<Modal.Actions>
+  //          						<Button>Create new Category</Button>
+  //          						<Button onClick={this.closeModals}>Cancel</Button>
+  //         					</Modal.Actions>
+  //       				</Form>
+  //     				</Modal.Content>
+  //   			</Modal>
 			
-		)
+		// )
 
 
 
@@ -309,7 +309,7 @@ class Expenses extends React.Component {
 				<form onSubmit={this.setCatModalStateFunction}>
 					<button> Create new Category </button>
 				</form>
-				{CreateCatModal}
+				{/*{CreateCatModal}*/}
 				{UpdateExpenseModal}
 				{ExpenseForm}
 				<div class="table-wrapper">

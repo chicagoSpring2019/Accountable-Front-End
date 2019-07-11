@@ -1,33 +1,23 @@
 import React from 'react';
 import './index.css';
 
-// send in categories in props
-
-
 class ViewByCat extends React.Component {
 	constructor(){
 		super();
 		this.state = {
 			options: [],
 			query: 0,
-
-
 		}
 	}
-
 
 
 	handleChange = async (e) => {
 		console.log("--handleSelectChange initiated--");
 		await this.setState({[e.target.name]: e.target.value});
-		console.log(this.state.query, "<<< state query")
-		console.log(typeof this.state.query, "<<<< typeof");
 		this.props.retrieveExpensesByQuery(this.state.query)
 	}
 
 	
-
-
 
 	render() {
 		const optionsToInsert = this.props.categories.map((op, i) => {
