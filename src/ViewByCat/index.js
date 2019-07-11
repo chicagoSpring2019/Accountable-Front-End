@@ -5,7 +5,6 @@ class ViewByCat extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			options: [],
 			query: 0,
 		}
 	}
@@ -22,7 +21,7 @@ class ViewByCat extends React.Component {
 	render() {
 		const optionsToInsert = this.props.categories.map((op, i) => {
 			return (
-				<option key={i} value={op.name} > {op.name} </option>
+				<option key={i} value={op.name}> {op.name} </option>
 			)
 		})
 
