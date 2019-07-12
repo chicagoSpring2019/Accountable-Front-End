@@ -42,7 +42,7 @@ class ViewByCat extends React.Component {
 
 
 		return (
-			<div>
+			<div class="ViewByCat">
 				{selector}
 			</div>
 		);

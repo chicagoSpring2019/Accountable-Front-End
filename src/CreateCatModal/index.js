@@ -8,6 +8,7 @@ class CreateCatModal extends React.Component {
 			newCatName: undefined, 
 			message: undefined,
 			showMessage: false,
+			showModal: false,
 		}
 	}
 
@@ -15,9 +16,23 @@ class CreateCatModal extends React.Component {
 		this.setState({[e.target.name]: e.target.value});
 	}
 
-	hideMessage = () => {
+	closeModal = () => {
+		this.setState({
+			showModal: false,
+		})
+	}
+
+	hideMessage = (e) => {
+		e.preventDefault();
 		this.setState({showMessage: false});
-		this.props.closeModals();
+		this.closeModal();
+	}
+
+	setCatModalStateFunction = async (e) => {
+		e.preventDefault()
+		this.setState({
+			showModal: true,
+		})
 	}
 
 	createCategory = async (e) => {
@@ -63,7 +78,7 @@ class CreateCatModal extends React.Component {
 				newCatName: undefined,
 				showMessage: false,
 			})
-			this.props.closeModals()
+			this.closeModal()
 			this.props.loadCatList();
 		} catch(err) {
 			console.log(err);
@@ -82,7 +97,8 @@ class CreateCatModal extends React.Component {
 
 		return (
 			<div>
-				<Modal open={this.props.showCatCreateModal}>
+				<button onClick={this.setCatModalStateFunction}> Create new Category </button>
+				<Modal open={this.state.showModal}>
       				<Modal.Header>Create a new category</Modal.Header>
       				<Modal.Content>
       					{ this.state.showMessage === true ? Message : noMessage }

@@ -12,7 +12,6 @@ class Expenses extends React.Component {
 			catIterator: '0',
 			date: '',
 			amount: '',
-			showCatCreateModal: false,
 			newName: '',
 			showExpenseUpdateModal: false,
 			editAmount: 0,
@@ -37,7 +36,6 @@ class Expenses extends React.Component {
 	closeModals = () => {
 		this.setState({
 			showExpenseUpdateModal: false,
-			showCatCreateModal: false,
 		})
 	}
 
@@ -92,13 +90,6 @@ class Expenses extends React.Component {
 				console.log(err);
 			}
 		}
-	}
-
-	setCatModalStateFunction = async (e) => {
-		e.preventDefault()
-		this.setState({
-			showCatCreateModal:true
-		})
 	}
 
 
@@ -258,12 +249,7 @@ class Expenses extends React.Component {
 
 		return (
 			<div>
-				<form onSubmit={this.setCatModalStateFunction}>
-					<button> Create new Category </button>
-				</form>
-				{/*{CreateCatModal}*/}
-				<CreateCatModal showCatCreateModal={this.state.showCatCreateModal} setCatModalStateFunction={this.setCatModalStateFunction} closeModals={this.closeModals} 
-				retrieveExpensesAndCategories={this.props.retrieveExpensesAndCategories} loadCatList={this.props.loadCatList} activeUserId={this.props.activeUserId} categories={this.props.categories}/>
+				<CreateCatModal retrieveExpensesAndCategories={this.props.retrieveExpensesAndCategories} loadCatList={this.props.loadCatList} activeUserId={this.props.activeUserId} categories={this.props.categories}/>
 				{UpdateExpenseModal}
 				{ExpenseForm}
 				<div class="table-wrapper">

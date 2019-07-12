@@ -45,6 +45,7 @@ h1 {
 .logOut {
   margin: 8px 25px 15px 10px;
   display: inline;
+  float: right;
 }
 
 @keyframes App-logo-spin {
