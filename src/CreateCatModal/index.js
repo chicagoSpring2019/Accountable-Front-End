@@ -15,11 +15,20 @@ class CreateCatModal extends React.Component {
 
 	createCategory = async (e) => {
 		e.preventDefault()
-		if (!this.state.newCatName || this.state.newCatName.length === 0) {
+		console.log(this.props.categories);
+		if (!this.state.newCatName) {
 			console.log("Please enter a valid name for the category");
 			return;
-		} 
-		//this.state.newCatName
+		} else {
+			const name = this.state.newCatName
+			for(let i = 0; i < this.props.categories.length; i++ ) {
+				console.log(this.props.categories[i].name)
+				if (name === this.props.categories[i].name) {
+					console.log(`The '${this.props.categories[i].name}' category already exists.`)
+					return;
+				}
+			}
+		}
 		const bodyToSend = [{
 			name: this.state.newCatName,
 		}]
@@ -35,6 +44,9 @@ class CreateCatModal extends React.Component {
 			})
 			const parsedResponse = await entryResponse.json();
 			this.props.retrieveExpensesAndCategories();
+			this.setState({
+				newCatName: undefined,
+			})
 			this.props.closeModals()
 			this.props.loadCatList();
 		} catch(err) {

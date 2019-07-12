@@ -101,34 +101,6 @@ class Expenses extends React.Component {
 		})
 	}
 
-	// createCategory = async (e) => {
-	// 	e.preventDefault()
-	// 	const bodyToSend = [{
-	// 		name: this.state.newName,
-	// 	}]
-	// 	console.log("--Expense entry creation has been initiated--");
-	// 	try {
-	// 		const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'category/user/' + this.props.activeUserId,  {
-	// 			method: 'POST',
-	// 			credentials: 'include',
-	// 			body: JSON.stringify(bodyToSend),
-	// 			headers: {
-	// 				'Content-Type': 'application/json'
-	// 			}
-	// 		})
-	// 		const parsedResponse = await entryResponse.json();
-	// 		this.props.retrieveExpensesAndCategories();
-	// 		this.setState({
-	// 			showCatCreateModal: false
-	// 		})
-	// 		this.props.loadCatList();
-	// 	} catch(err) {
-	// 		console.log(err);
-	// 	}
-	// }
-
-
-
 
 	openUpdateFunction = async (e) => {
 		e.preventDefault()
@@ -291,7 +263,7 @@ class Expenses extends React.Component {
 				</form>
 				{/*{CreateCatModal}*/}
 				<CreateCatModal showCatCreateModal={this.state.showCatCreateModal} setCatModalStateFunction={this.setCatModalStateFunction} closeModals={this.closeModals} 
-				retrieveExpensesAndCategories={this.props.retrieveExpensesAndCategories} loadCatList={this.loadCatList} activeUserId={this.props.activeUserId}/>
+				retrieveExpensesAndCategories={this.props.retrieveExpensesAndCategories} loadCatList={this.props.loadCatList} activeUserId={this.props.activeUserId} categories={this.props.categories}/>
 				{UpdateExpenseModal}
 				{ExpenseForm}
 				<div class="table-wrapper">
