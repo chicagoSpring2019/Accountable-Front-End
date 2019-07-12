@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import CreateCatModal from '../CreateCatModal/index';
 import { Modal, Form, Button, Label, Header } from 'semantic-ui-react';
 
 
@@ -100,31 +101,31 @@ class Expenses extends React.Component {
 		})
 	}
 
-	createCategory = async (e) => {
-		e.preventDefault()
-		const bodyToSend = [{
-			name: this.state.newName,
-		}]
-		console.log("--Expense entry creation has been initiated--");
-		try {
-			const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'category/user/' + this.props.activeUserId,  {
-				method: 'POST',
-				credentials: 'include',
-				body: JSON.stringify(bodyToSend),
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			})
-			const parsedResponse = await entryResponse.json();
-			this.props.retrieveExpensesAndCategories();
-			this.setState({
-				showCatCreateModal: false
-			})
-			this.props.loadCatList();
-		} catch(err) {
-			console.log(err);
-		}
-	}
+	// createCategory = async (e) => {
+	// 	e.preventDefault()
+	// 	const bodyToSend = [{
+	// 		name: this.state.newName,
+	// 	}]
+	// 	console.log("--Expense entry creation has been initiated--");
+	// 	try {
+	// 		const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'category/user/' + this.props.activeUserId,  {
+	// 			method: 'POST',
+	// 			credentials: 'include',
+	// 			body: JSON.stringify(bodyToSend),
+	// 			headers: {
+	// 				'Content-Type': 'application/json'
+	// 			}
+	// 		})
+	// 		const parsedResponse = await entryResponse.json();
+	// 		this.props.retrieveExpensesAndCategories();
+	// 		this.setState({
+	// 			showCatCreateModal: false
+	// 		})
+	// 		this.props.loadCatList();
+	// 	} catch(err) {
+	// 		console.log(err);
+	// 	}
+	// }
 
 
 
@@ -258,27 +259,6 @@ class Expenses extends React.Component {
 			}
 		})
 
-		// const CreateCatModal = (
-
-		// 		<Modal open={this.state.showCatCreateModal}>
-  //     				<Modal.Content>
-  //       				<Form onSubmit={this.createCategory}>
-  //         					<Label>
-  //           					Create a new category:
-  //         					</Label>
-  //         					<Form.Input type='text' name='newName' value={this.state.newName} onChange={this.handleChange}/>
-          					
-  //         					<Modal.Actions>
-  //          						<Button>Create new Category</Button>
-  //          						<Button onClick={this.closeModals}>Cancel</Button>
-  //         					</Modal.Actions>
-  //       				</Form>
-  //     				</Modal.Content>
-  //   			</Modal>
-			
-		// )
-
-
 
 		const UpdateExpenseModal = (
 
@@ -310,6 +290,8 @@ class Expenses extends React.Component {
 					<button> Create new Category </button>
 				</form>
 				{/*{CreateCatModal}*/}
+				<CreateCatModal showCatCreateModal={this.state.showCatCreateModal} setCatModalStateFunction={this.setCatModalStateFunction} closeModals={this.closeModals} 
+				retrieveExpensesAndCategories={this.props.retrieveExpensesAndCategories} loadCatList={this.loadCatList} activeUserId={this.props.activeUserId}/>
 				{UpdateExpenseModal}
 				{ExpenseForm}
 				<div class="table-wrapper">
@@ -319,7 +301,7 @@ class Expenses extends React.Component {
 								<th>DATE</th>
 								<th className="catBox">CATEGORY</th>
 								<th>AMOUNT</th>
-								<th colspan="2"> Editing </th>
+								<th colSpan="2"> Editing </th>
 							</tr>
 						</thead>
 						<tbody>

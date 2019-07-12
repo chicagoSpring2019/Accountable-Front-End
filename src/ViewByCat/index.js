@@ -11,7 +11,6 @@ class ViewByCat extends React.Component {
 
 
 	handleChange = async (e) => {
-		console.log("--handleSelectChange initiated--");
 		await this.setState({[e.target.name]: e.target.value});
 		this.props.retrieveExpensesByQuery(this.state.query)
 	}

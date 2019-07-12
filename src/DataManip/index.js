@@ -5,7 +5,7 @@ import './index.css';
 
 
 class DataManip extends React.Component {
-	constructor(props) {
+	constructor() {
 		super();
 		this.state = {
 
