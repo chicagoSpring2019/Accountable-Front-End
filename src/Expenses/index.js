@@ -1,6 +1,5 @@
 import React from 'react';
 import './index.css';
-import CreateCatModal from '../CreateCatModal/index';
 import { Modal, Form, Button, Label, Header } from 'semantic-ui-react';
 
 
@@ -249,7 +248,6 @@ class Expenses extends React.Component {
 
 		return (
 			<div>
-				<CreateCatModal retrieveExpensesAndCategories={this.props.retrieveExpensesAndCategories} loadCatList={this.props.loadCatList} activeUserId={this.props.activeUserId} categories={this.props.categories}/>
 				{UpdateExpenseModal}
 				{ExpenseForm}
 				<div class="table-wrapper">
