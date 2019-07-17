@@ -1,3 +1,9 @@
+.CreateCatButton {
+	display: inline;
+	margin: 15px;
+	background-color: pink;
+	float: right;
+}
 .message {
 	font-size: 12px;
 	color: red;

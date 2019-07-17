@@ -1,6 +1,4 @@
-/*.ViewByCat {
-	display: inline;
-	margin: 15px;
-	background-color: grey;
+.ViewByCat {
+	display: flex;
 	float: left;
-}*/
+}

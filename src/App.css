@@ -60,3 +60,11 @@ h1 {
 .spacer {
   flex: 1;
 }
+
+.CatStuff {
+  display: flex;
+  justify-content: space-between;
+  /*min-width: 100%;*/
+  margin: 10px 3%;
+  margin-top: 25px;
+}

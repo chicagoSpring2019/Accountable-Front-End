@@ -129,9 +129,11 @@ class App extends React.Component {
 		  			<h1>  Accountable  </h1>
 					{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUser={this.setActiveUser} /> }
 					{ this.state.logged ? <DataManip expenseTot={this.state.expenseTot} categories={this.state.categories} expenses={this.state.expenses} /> : null }
-					{ this.state.logged ? <ViewByCat categories={this.state.categories} retrieveExpensesByQuery={this.retrieveExpensesByQuery} /> : null }
-					{/*{ this.state.logged ? <SavingsSplit/> : null} */}
-					{ this.state.logged ? <CreateCatModal retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadCatList={this.loadCatList} activeUserId={this.activeUserId} categories={this.categories}/> : null }
+					<div className="CatStuff">
+						{ this.state.logged ? <ViewByCat categories={this.state.categories} retrieveExpensesByQuery={this.retrieveExpensesByQuery} /> : null }
+						{/*{ this.state.logged ? <SavingsSplit/> : null} */}
+						{ this.state.logged ? <CreateCatModal retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadCatList={this.loadCatList} activeUserId={this.activeUserId} categories={this.categories}/> : null }
+		  			</div>
 		  			{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} queryCategory={this.state.queryCategory}
 		  			retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal}  /> : null }
 	

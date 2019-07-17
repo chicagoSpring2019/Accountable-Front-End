@@ -96,8 +96,8 @@ class CreateCatModal extends React.Component {
 		)
 
 		return (
-			<div>
-				<button onClick={this.setCatModalStateFunction}> Create new Category </button>
+			<div className="CreateCatButton">
+				<button class="CreateCatButton" onClick={this.setCatModalStateFunction} > Create new Category </button>
 				<Modal open={this.state.showModal}>
       				<Modal.Header>Create a new category</Modal.Header>
       				<Modal.Content>
