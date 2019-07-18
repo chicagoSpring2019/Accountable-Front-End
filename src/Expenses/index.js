@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.css';
 import { Modal, Form, Button, Label, Header } from 'semantic-ui-react';
+import image from './arrows.png';
 
 
 
@@ -294,7 +295,7 @@ class Expenses extends React.Component {
 							<tr>
 								<th>DATE</th>
 								<th className="catBox">CATEGORY</th>
-								<th onClick={this.sortAmount}>AMOUNT</th>
+								<th onClick={this.sortAmount}>AMOUNT  <img src={image} className="sortArrows"/> </th>
 								<th colSpan="2"> Editing </th>
 							</tr>
 						</thead>

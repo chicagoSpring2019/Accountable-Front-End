@@ -10,6 +10,10 @@
 	min-height: 15px;
 }
 
+.sortArrows {
+	max-height: 15px;
+}
+
 
 .entryBar {
 	background-color: lightgrey;
