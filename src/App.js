@@ -132,7 +132,7 @@ class App extends React.Component {
 					<div className="CatStuff">
 						{ this.state.logged ? <ViewByCat categories={this.state.categories} retrieveExpensesByQuery={this.retrieveExpensesByQuery} /> : null }
 						{/*{ this.state.logged ? <SavingsSplit/> : null} */}
-						{ this.state.logged ? <CreateCatModal retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadCatList={this.loadCatList} activeUserId={this.activeUserId} categories={this.categories}/> : null }
+						{ this.state.logged ? <CreateCatModal retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadCatList={this.loadCatList} activeUserId={this.state.activeUserId} categories={this.state.categories}/> : null }
 		  			</div>
 		  			{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} queryCategory={this.state.queryCategory}
 		  			retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal}  /> : null }

@@ -174,9 +174,14 @@ class RegisterAndLogin extends React.Component {
 			</div>
 		)
 
+		const Note = (
+			<h4> Use <i>"email@test.com"</i> and <i>"password"</i> to login to an account with some already established data!</h4>
+		)
+
 		return (
 			<div>
 				{ this.state.showRegister ? Registration : Login }
+				{ Note }
 			</div>
 		);
 	}
