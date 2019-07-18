@@ -19,6 +19,9 @@ class Expenses extends React.Component {
 			expenseTot: 0,
 			messageNew: '',
 			messageEdit: '',
+			expenses: [],
+			amountSortMode: 'unsorted',
+
 		}
 	}
 
@@ -101,6 +104,41 @@ class Expenses extends React.Component {
 			category: this.props.categories[this.state.catIterator],
 			showExpenseUpdateModal: true,
 		})
+	}
+
+
+	sortAmount = async () => {
+		if (this.state.amountSortMode === 'unsorted') {
+			const sorted = this.props.expenses.sort(
+					function(a, b) {
+						return b.amount - a.amount;
+					}
+				);
+			await this.setState({
+				expenses: this.sorted
+			})
+			this.setState({
+				amountSortMode: 'ascending'
+			})
+		} else if (this.state.amountSortMode === 'ascending') {
+			const sorted = this.props.expenses.sort(
+					function(a, b) {
+						return a.amount - b.amount;
+					}
+				);
+			await this.setState({
+				expenses: this.sorted
+			})
+			this.setState({
+				amountSortMode: 'descending'
+			})
+		} else {
+			await this.props.retrieveExpensesAndCategories();
+			this.setState({
+				amountSortMode: 'unsorted'
+			})
+		}
+		console.log(this.state.expenses)
 	}
 
 
@@ -256,7 +294,7 @@ class Expenses extends React.Component {
 							<tr>
 								<th>DATE</th>
 								<th className="catBox">CATEGORY</th>
-								<th>AMOUNT</th>
+								<th onClick={this.sortAmount}>AMOUNT</th>
 								<th colSpan="2"> Editing </th>
 							</tr>
 						</thead>
