@@ -108,28 +108,25 @@ class Expenses extends React.Component {
 	}
 
 
+	
+
+
 	sortAmount = async () => {
 		if (this.state.amountSortMode === 'unsorted') {
-			const sorted = this.props.expenses.sort(
+			this.props.expenses.sort(
 					function(a, b) {
 						return b.amount - a.amount;
 					}
 				);
-			await this.setState({
-				expenses: this.sorted
-			})
 			this.setState({
 				amountSortMode: 'ascending'
 			})
 		} else if (this.state.amountSortMode === 'ascending') {
-			const sorted = this.props.expenses.sort(
+			this.props.expenses.sort(
 					function(a, b) {
 						return a.amount - b.amount;
 					}
 				);
-			await this.setState({
-				expenses: this.sorted
-			})
 			this.setState({
 				amountSortMode: 'descending'
 			})
@@ -139,7 +136,6 @@ class Expenses extends React.Component {
 				amountSortMode: 'unsorted'
 			})
 		}
-		console.log(this.state.expenses)
 	}
 
 
@@ -293,7 +289,7 @@ class Expenses extends React.Component {
 					<table>
 						<thead>
 							<tr>
-								<th>DATE</th>
+								<th onClick={this.props.sortDate}>DATE  <img src={image} className="sortArrows"/> </th>
 								<th className="catBox">CATEGORY</th>
 								<th onClick={this.sortAmount}>AMOUNT  <img src={image} className="sortArrows"/> </th>
 								<th colSpan="2"> Editing </th>

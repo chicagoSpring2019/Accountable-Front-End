@@ -19,6 +19,8 @@ class App extends React.Component {
 			expenses: [],
 			expenseTot: 0,
 			queryCategory: 'All',
+			dateSortMode: 'ascending',
+
 		}
 	}
 
@@ -59,6 +61,7 @@ class App extends React.Component {
 	retrieveExpensesAndCategories = async (iterator) => {
 		console.log("--retrieveExpensesAndCategories() has been initiated--");
 		try {
+
 			const expenseResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/user/' + this.state.activeUserId)
 			const categoryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'category/user/' + this.state.activeUserId)
 			const parsedExpenseResponse = await expenseResponse.json();
@@ -67,8 +70,38 @@ class App extends React.Component {
 				categories: parsedCategoryResponse.data,
 				expenses: parsedExpenseResponse.data
 			})
+			this.sortDate();
 		} catch(err) {
 			console.log(err);
+		}
+	}
+
+	sortDate = async () => {
+		console.log("sortDate clicked!")
+		if (this.state.dateSortMode === 'descending') {
+			console.log("state was descending")
+			await this.state.expenses.sort(
+				function(a, b) {
+					let aa = a.date.replace(/[-.:,]/g,'');
+	        		let bb = b.date.replace(/[-.:,]/g,'');
+	    			return aa < bb ? -1 : (aa > bb ? 1 : 0);
+				}
+			);
+			this.setState({
+				dateSortMode: 'ascending'
+			})
+		} else {
+			console.log("State was ascending")
+			await this.state.expenses.sort(
+				function(a, b) {
+					let aa = a.date.replace(/[-.:,]/g,'');
+	        		let bb = b.date.replace(/[-.:,]/g,'');
+	    			return bb < aa ? -1 : (bb > aa ? 1 : 0);
+				}
+			);
+			this.setState({
+				dateSortMode: 'descending'
+			})
 		}
 	}
 
@@ -135,9 +168,9 @@ class App extends React.Component {
 						{ this.state.logged ? <CreateCatModal retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadCatList={this.loadCatList} activeUserId={this.state.activeUserId} categories={this.state.categories}/> : null }
 		  			</div>
 		  			{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} queryCategory={this.state.queryCategory}
-		  			retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal}  /> : null }
+		  			retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal}  sortDate={this.sortDate} /> : null }
 	
-		  			<h6 class="spacer">© Gregory Gancarz - 2019</h6>
+		  			<h6 className="spacer">© Gregory Gancarz - 2019</h6>
 		  		</div>
 			</div>
   		);
