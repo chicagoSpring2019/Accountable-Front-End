@@ -77,7 +77,6 @@ class App extends React.Component {
 	}
 
 	sortDate = () => {
-		console.log("sortDate clicked!")
 		if (this.state.dateSortMode === 'descending') {
 			console.log("state was descending")
 			this.state.expenses.sort(
@@ -91,7 +90,6 @@ class App extends React.Component {
 				dateSortMode: 'ascending'
 			})
 		} else {
-			console.log("State was ascending")
 			this.state.expenses.sort(
 				function(a, b) {
 					let aa = a.date.replace(/[-.:,]/g,'');
