@@ -70,17 +70,17 @@ class App extends React.Component {
 				categories: parsedCategoryResponse.data,
 				expenses: parsedExpenseResponse.data
 			})
-			this.sortDate();
+			this.defaultSortDate();
 		} catch(err) {
 			console.log(err);
 		}
 	}
 
-	sortDate = async () => {
+	sortDate = () => {
 		console.log("sortDate clicked!")
 		if (this.state.dateSortMode === 'descending') {
 			console.log("state was descending")
-			await this.state.expenses.sort(
+			this.state.expenses.sort(
 				function(a, b) {
 					let aa = a.date.replace(/[-.:,]/g,'');
 	        		let bb = b.date.replace(/[-.:,]/g,'');
@@ -92,7 +92,7 @@ class App extends React.Component {
 			})
 		} else {
 			console.log("State was ascending")
-			await this.state.expenses.sort(
+			this.state.expenses.sort(
 				function(a, b) {
 					let aa = a.date.replace(/[-.:,]/g,'');
 	        		let bb = b.date.replace(/[-.:,]/g,'');
@@ -103,6 +103,19 @@ class App extends React.Component {
 				dateSortMode: 'descending'
 			})
 		}
+	}
+
+	defaultSortDate = () => {
+		this.state.expenses.sort(
+			function(a, b) {
+				let aa = a.date.replace(/[-.:,]/g,'');
+	        	let bb = b.date.replace(/[-.:,]/g,'');
+	    		return bb < aa ? -1 : (bb > aa ? 1 : 0);
+			}
+		);
+		this.setState({
+			dateSortMode: 'descending'
+		})
 	}
 
 	retrieveExpensesByQuery = async (query) => {
