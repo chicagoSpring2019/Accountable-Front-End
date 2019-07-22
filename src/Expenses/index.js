@@ -30,6 +30,10 @@ class Expenses extends React.Component {
 		this.setState({[e.target.name]: e.target.value});
 	}
 
+	handleSelectChange = async (e) => {
+		this.setState({catIterator: e.target.value});
+	}
+
 	clearForm = () => {
 		this.setState({
 			amount: '',

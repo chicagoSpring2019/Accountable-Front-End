@@ -9,11 +9,18 @@ class EditCatModal extends React.Component {
 			message: undefined,
 			showMessage: false,
 			showModal: false,
+			catIterator: '0',
 		}
 	}
 
 	handleChange = (e) => {
 		this.setState({[e.target.name]: e.target.value});
+	}
+
+	handleSelectChange = async (e) => {
+		this.setState({
+			catIterator: e.target.value,
+		});
 	}
 
 	closeModal = () => {
@@ -36,79 +43,96 @@ class EditCatModal extends React.Component {
 	}
 
 	editCategory = async (e) => {
-		// e.preventDefault()
-		// console.log(this.props.categories);
-		// if (!this.state.newCatName) {
-		// 	console.log("Please enter a valid name for the category.");
-		// 	this.setState({
-		// 		message: "Please enter a valid name for the category.",
-		// 		showMessage: true,
-		// 	})
-		// 	return;
-		// } else {
-		// 	const name = this.state.newCatName
-		// 	for(let i = 0; i < this.props.categories.length; i++ ) {
-		// 		console.log(this.props.categories[i].name)
-		// 		if (name === this.props.categories[i].name) {
-		// 			console.log(`The '${this.props.categories[i].name}' category already exists.`)
-		// 			this.setState({
-		// 				message: `The '${this.props.categories[i].name}' category already exists.`,
-		// 				showMessage: true,
-		// 			})
-		// 			return;
-		// 		}
-		// 	}
-		// }
-		// const bodyToSend = [{
-		// 	name: this.state.newCatName,
-		// }]
-		// console.log("--Expense entry creation has been initiated--");
-		// try {
-		// 	const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'category/user/' + this.props.activeUserId,  {
-		// 		method: 'POST',
-		// 		credentials: 'include',
-		// 		body: JSON.stringify(bodyToSend),
-		// 		headers: {
-		// 			'Content-Type': 'application/json'
-		// 		}
-		// 	})
-		// 	const parsedResponse = await entryResponse.json();
-		// 	this.props.retrieveExpensesAndCategories();
-		// 	this.setState({
-		// 		newCatName: undefined,
-		// 		showMessage: false,
-		// 	})
-		// 	this.closeModal()
-		// 	this.props.loadCatList();
-		// } catch(err) {
-		// 	console.log(err);
-		// }
+		e.preventDefault()
+		const catToEdit = this.props.categories[this.state.catIterator]
+		if (!this.state.newCatName) {
+			console.log("Please enter a valid name for the category.");
+			this.setState({
+				message: "Please enter a valid name for the category.",
+				showMessage: true,
+			})
+			return;
+		} else if (this.state.newCatName === catToEdit.name) {
+			console.log("The category already has the given name.");
+			this.setState({
+				message: "The category already has the given name.",
+				showMessage: true,
+			})
+			return;
+		} else {
+			const name = this.state.newCatName
+			for(let i = 0; i < this.props.categories.length; i++ ) {
+				if (name === this.props.categories[i].name) {
+					console.log(`The '${this.props.categories[i].name}' category name already exists.`)
+					this.setState({
+						message: `The '${this.props.categories[i].name}' category already exists.`,
+						showMessage: true,
+					})
+					return;
+				}
+			}
+		}
+		const bodyToSend = [{
+			name: this.state.newCatName
+		}]
+		console.log("--Category update has been initiated--");
+		console.log(catToEdit, "<<<< catToEdit")
+		try {
+			const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'category/cat/' + catToEdit._id,  {
+				method: 'POST',
+				credentials: 'include',
+				body: JSON.stringify(bodyToSend),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			const parsedResponse = await entryResponse.json();
+			console.log(parsedResponse)
+			this.props.retrieveExpensesAndCategories();
+			this.setState({
+				newCatName: undefined,
+				showMessage: false,
+			})
+			this.closeModal()
+			this.props.loadCatList();
+		} catch(err) {
+			console.log(err);
+		}
 	}
 
 	render() {
 
 		const Message = (
-			<p class="message"> {this.state.message} </p>
+			<p className="message"> {this.state.message} </p>
 		)
 
 		const noMessage = (
 			<p className="noMessage"/>
 		)
 
+		const optionsToInsert = this.props.categories.map((op, i) => {
+			return (
+				<option key={i} value={i} > {op.name} </option>
+			)
+		})
+
 		return (
 			<div className="CreateCatButton">
-				<button class="CreateCatButton" onClick={this.setCatModalStateFunction} > Edit Category </button>
+				<button onClick={this.setCatModalStateFunction} > Edit Category </button>
 				<Modal open={this.state.showModal}>
       				<Modal.Header>Edit category</Modal.Header>
       				<Modal.Content>
       					{ this.state.showMessage === true ? Message : noMessage }
-        				<Form onSubmit={this.editCategory}>
-          					<Form.Input type='text' name='newCatName' value={this.state.newCatName} onChange={this.handleChange}/>
-          					{noMessage}
-          					<Modal.Actions>
-           						<Button>Update the Category</Button>
-           						<Button onClick={this.hideMessage}>Cancel</Button>
-          					</Modal.Actions>
+	        			<Form onSubmit={this.editCategory}>
+	        				<select onChange={this.handleSelectChange}>
+								{optionsToInsert}
+							</select>
+	          				<Form.Input type='text' name='newCatName' value={this.state.newCatName} onChange={this.handleChange}/>
+	          				{noMessage}
+	          				<Modal.Actions>
+	           					<Button>Update the Category</Button>
+	           					<Button onClick={this.hideMessage}>Cancel</Button>
+	          				</Modal.Actions>
         				</Form>
       				</Modal.Content>
     			</Modal>

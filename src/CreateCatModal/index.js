@@ -37,7 +37,6 @@ class CreateCatModal extends React.Component {
 
 	createCategory = async (e) => {
 		e.preventDefault()
-		console.log(this.props.categories);
 		if (!this.state.newCatName) {
 			console.log("Please enter a valid name for the category.");
 			this.setState({
@@ -88,7 +87,7 @@ class CreateCatModal extends React.Component {
 	render() {
 
 		const Message = (
-			<p class="message"> {this.state.message} </p>
+			<p className="message"> {this.state.message} </p>
 		)
 
 		const noMessage = (
@@ -97,7 +96,7 @@ class CreateCatModal extends React.Component {
 
 		return (
 			<div className="CreateCatButton">
-				<button class="CreateCatButton" onClick={this.setCatModalStateFunction} > Create new Category </button>
+				<button onClick={this.setCatModalStateFunction} > Create new Category </button>
 				<Modal open={this.state.showModal}>
       				<Modal.Header>Create a new category</Modal.Header>
       				<Modal.Content>
