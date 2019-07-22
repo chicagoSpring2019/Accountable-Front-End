@@ -142,12 +142,15 @@ class RegisterAndLogin extends React.Component {
 			<p className="noMessage"/>
 		)
 
+		const Dash = (
+			<header>
+				<h1> ACCOUNTABLE </h1>
+				<h2> Personal finance simplified </h2>
+			</header>	
+		)
+
 		const Login = (
 			<div>
-				<header>
-					<h1> ACCOUNTABLE </h1>
-					<h2> Personal finance simplified </h2>
-				</header>
 				<h3> Login </h3>
 				<form id="login-form" onSubmit={this.handleLogin}>
 					Email:
@@ -184,6 +187,7 @@ class RegisterAndLogin extends React.Component {
 
 		return (
 			<div>
+				{Dash}
 				{ this.state.showRegister ? Registration : Login }
 				{ Note }
 			</div>
