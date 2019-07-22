@@ -18,3 +18,12 @@ input {
 .button {
 	min-width: 60px;
 }
+
+header {
+	background-image: url("./dash2.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	min-width: 100%;
+	min-height: 600px;
+}

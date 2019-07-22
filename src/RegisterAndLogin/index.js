@@ -144,6 +144,9 @@ class RegisterAndLogin extends React.Component {
 
 		const Login = (
 			<div>
+				<header>
+
+				</header>
 				<h3> Login </h3>
 				<form id="login-form" onSubmit={this.handleLogin}>
 					Email:

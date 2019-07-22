@@ -171,7 +171,7 @@ class App extends React.Component {
   		return (
 			<div className="App">
 				<div className="main">
-		  			<h1>  Accountable  </h1>
+		  			{ this.state.logged ? <h1>  Accountable  </h1> : null }
 					{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUser={this.setActiveUser} /> }
 					{ this.state.logged ? <DataManip expenseTot={this.state.expenseTot} categories={this.state.categories} expenses={this.state.expenses} /> : null }
 					<div className="CatStuff">
