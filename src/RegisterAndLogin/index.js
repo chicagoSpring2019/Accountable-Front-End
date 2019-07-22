@@ -145,7 +145,8 @@ class RegisterAndLogin extends React.Component {
 		const Login = (
 			<div>
 				<header>
-
+					<h1> ACCOUNTABLE </h1>
+					<h2> Personal finance simplified </h2>
 				</header>
 				<h3> Login </h3>
 				<form id="login-form" onSubmit={this.handleLogin}>

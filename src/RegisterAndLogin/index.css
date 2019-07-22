@@ -1,3 +1,5 @@
+
+
 input {
 	min-width: 200px
 }
@@ -20,10 +22,36 @@ input {
 }
 
 header {
-	background-image: url("./dash2.jpg");
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-family: 'Darker Grotesque', sans-serif;
+	background-image: linear-gradient(to bottom, transparent 55%, white),
+					  url("./dash2.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
 	min-width: 100%;
-	min-height: 600px;
+	min-height: 650px;
+
+}
+
+h1	{
+	letter-spacing: 15px;
+	font-size: 55px;
+	color: white;
+	text-shadow: 3px 2px 3.5px black,
+				 -2px -1.5px 3.5px black;
+	margin-bottom: 5px;
+	padding-bottom: 20px;
+}
+
+h2 {
+	font-size: 20px;
+	color: white;
+	text-shadow: 1px 1px 3px black;
+	font-weight: 100px;
+	margin-top: 5px;
+	margin-bottom: 20px;
 }
