@@ -150,34 +150,40 @@ class RegisterAndLogin extends React.Component {
 		)
 
 		const Login = (
-			<div>
+			<div className="logReg">
 				<h3> Login </h3>
-				<form id="login-form" onSubmit={this.handleLogin}>
-					Email:
-					<input type='text' name='email' value={this.state.email} onChange={this.handleChange}/>
-					Password:
-					<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
-					<button className="button"> Log in </button>
+				<form onSubmit={this.handleLogin}>
+					<div className="formInput">
+						<p>Email:</p>
+						<input type='text' name='email' value={this.state.email} onChange={this.handleChange}/>
+						<p>Password:</p>
+						<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
+						<button> Log in </button>
+					</div>
 					{this.state.message === '' ? noMessage : Message}
 				</form>
-				<p> Don't have an account? Set one up now! It's free and easy. </p>
+				<p> Don't have an account? Set one up now! <br/> It's free and easy. </p>
 				<button onClick={this.showRegisterForm}> Sign up </button>
 			</div>
 		)
 
 		const Registration = (
-			<div>
+			<div className="logReg">
 				<h3 >Registration </h3>
-				<form id="register-form" onSubmit={this.handleRegister}>
-					Email:
-					<input type='email' name='email' value={this.state.email} onChange={this.handleChange}/>
-					Password:
-					<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
-					<button className="button">Register</button>
+				<form onSubmit={this.handleRegister}>
+					<div className="formInput">
+						<p>Email:</p>
+						<input type='email' name='email' value={this.state.email} onChange={this.handleChange}/>
+						<p>Password:</p>
+						<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
+						<button>Register</button>
+					</div>					
 					{this.state.message === '' ? noMessage : Message}
 				</form>
-				<p> You have an account after all? </p>
-				<button className="button" onClick={this.hideRegisterForm} > Login </button>
+				<div className="logRegSwap">
+					<p> You have an account after all? </p>
+					<button onClick={this.hideRegisterForm} > Login </button>
+				</div>
 			</div>
 		)
 
@@ -187,7 +193,7 @@ class RegisterAndLogin extends React.Component {
 
 		return (
 			<div>
-				{Dash}
+				{ Dash }
 				{ this.state.showRegister ? Registration : Login }
 				{ Note }
 			</div>

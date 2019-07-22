@@ -1,11 +1,7 @@
 
 
 input {
-	min-width: 200px
-}
-
-.logForm {
-	margin: 16px;
+	min-width: 210px
 }
 
 .message {
@@ -17,8 +13,22 @@ input {
 	min-height: 15px;
 }
 
-.button {
-	min-width: 60px;
+.logReg {
+	margin-top: 30px;
+}
+
+.formInput {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	height: 30px;
+	align-items: baseline;
+}
+
+h3 {
+	margin: 30px;
+	letter-spacing: 6px;
+	font-size: 22px;
 }
 
 header {
@@ -48,10 +58,24 @@ h1	{
 }
 
 h2 {
-	font-size: 20px;
+	font-size: 25px;
 	color: white;
 	text-shadow: 1px 1px 3px black;
 	font-weight: 100px;
 	margin-top: 5px;
 	margin-bottom: 20px;
+}
+
+p {
+	margin-left: 30px;
+	margin-right: 6px;
+}
+
+.formInput button {
+	margin: 20px;
+	min-width: 80px;
+}
+
+.logRegSwap {
+	margin: 25px;
 }
