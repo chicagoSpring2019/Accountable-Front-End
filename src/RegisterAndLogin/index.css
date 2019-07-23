@@ -55,6 +55,7 @@ h1	{
 				 -2px -1.5px 3.5px black;
 	margin-bottom: 5px;
 	padding-bottom: 20px;
+	flex-shrink: 1;
 }
 
 h2 {
@@ -64,6 +65,7 @@ h2 {
 	font-weight: 100px;
 	margin-top: 5px;
 	margin-bottom: 20px;
+	flex-shrink: 1;
 }
 
 p {
@@ -78,4 +80,9 @@ p {
 
 .logRegSwap {
 	margin: 25px;
+}
+
+button {
+	border: 1px solid grey;
+	min-width: 70px;
 }
