@@ -8,6 +8,7 @@ class ViewByCat extends React.Component {
 			query: 0,
 			catTot: 0,
 			catAvg: 0,
+			queryOccured: false,
 		}
 	}
 
@@ -36,6 +37,7 @@ class ViewByCat extends React.Component {
 		this.setState({
 			catTot: catTot,
 			catAvg: catAvg,
+			queryOccured: true,
 		})
 	}
 
@@ -59,10 +61,13 @@ class ViewByCat extends React.Component {
 						</select>
 					</p>
 				</form>
-				<div className="ExpenseInfoByCat">
-					<p>Category Total: {this.state.catTot.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }</p>
-					<p>Average expense amount for category: {this.state.catAvg.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }</p>
-				</div>
+			</div>
+		)
+
+		const avgAndTot = (
+			<div className="ExpenseInfoByCat">
+				<p>Category Total: {this.state.catTot.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) } </p>
+				<p>Average expense amount for category: {this.state.catAvg.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }</p>
 			</div>
 		)
 
@@ -72,6 +77,7 @@ class ViewByCat extends React.Component {
 		return (
 			<div className="ViewByCat">
 				{selector}
+				{ this.state.queryOccured ? avgAndTot : null }
 			</div>
 		);
 	}
