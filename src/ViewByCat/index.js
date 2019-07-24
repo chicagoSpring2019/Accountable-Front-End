@@ -67,17 +67,20 @@ class ViewByCat extends React.Component {
 		const avgAndTot = (
 			<div className="ExpenseInfoByCat">
 				<p>Category Total: {this.state.catTot.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) } </p>
+				<br/>
 				<p>Average expense amount for category: {this.state.catAvg.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }</p>
 			</div>
 		)
 
 
 
-
 		return (
 			<div className="ViewByCat">
 				{selector}
-				{ this.state.queryOccured ? avgAndTot : null }
+
+				<div className="ViewByCat">
+					{ this.state.queryOccured ? avgAndTot : null }
+				</div>
 			</div>
 		);
 	}
