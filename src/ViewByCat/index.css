@@ -1,4 +1,18 @@
 .ViewByCat {
 	display: flex;
 	float: left;
+	flex-direction: column;
+}
+
+.expenseInfoByCat {
+	display: flex;
+	float: left;
+	margin-top: 25px;
+
+}
+
+.expenseInfoByCat p {
+	margin: 0;
+	width: auto;
+	float: left;
 }
