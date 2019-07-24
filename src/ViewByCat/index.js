@@ -6,13 +6,37 @@ class ViewByCat extends React.Component {
 		super();
 		this.state = {
 			query: 0,
+			catTot: 0,
+			catAvg: 0,
 		}
 	}
 
 
 	handleChange = async (e) => {
 		await this.setState({[e.target.name]: e.target.value});
-		this.props.retrieveExpensesByQuery(this.state.query)
+		await this.props.retrieveExpensesByQuery(this.state.query);
+		this.getTotAndAvg();
+	}
+
+	getTotAndAvg = () => {
+		let queried = [];
+		const all = this.props.expenses
+		for(let i = 0; i < all.length; i++ ) {
+			if (all[i].category.name === this.state.query) {
+				queried.push(all[i]);
+			}
+		}
+		console.log(all, "<<< all <<<")
+		let catTot = 0
+		const length = queried.length
+		for (let i = 0; i < length; i++ ) {
+			catTot += queried[i].amount;
+		}
+		const catAvg = (catTot / queried.length)
+		this.setState({
+			catTot: catTot,
+			catAvg: catAvg,
+		})
 	}
 
 	
@@ -35,6 +59,10 @@ class ViewByCat extends React.Component {
 						</select>
 					</p>
 				</form>
+				<div className="ExpenseInfoByCat">
+					<p>Category Total: {this.state.catTot.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }</p>
+					<p>Average expense amount for category: {this.state.catAvg.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }</p>
+				</div>
 			</div>
 		)
 

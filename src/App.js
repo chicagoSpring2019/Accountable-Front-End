@@ -59,7 +59,7 @@ class App extends React.Component {
 
 
 
-	retrieveExpensesAndCategories = async (iterator) => {
+	retrieveExpensesAndCategories = async () => {
 		console.log("--retrieveExpensesAndCategories() has been initiated--");
 		try {
 
@@ -175,7 +175,7 @@ class App extends React.Component {
 					{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUser={this.setActiveUser} /> }
 					{ this.state.logged ? <DataManip expenseTot={this.state.expenseTot} categories={this.state.categories} expenses={this.state.expenses} /> : null }
 					<div className="CatStuff">
-						{ this.state.logged ? <ViewByCat categories={this.state.categories} retrieveExpensesByQuery={this.retrieveExpensesByQuery} /> : null }
+						{ this.state.logged ? <ViewByCat categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesByQuery={this.retrieveExpensesByQuery} /> : null }
 						{/*{ this.state.logged ? <SavingsSplit/> : null} */}
 						{/*{ this.state.logged ? <EditCatModal retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadCatList={this.loadCatList} activeUserId={this.state.activeUserId} categories={this.state.categories}/> : null }*/}
 						{ this.state.logged ? <CreateCatModal retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadCatList={this.loadCatList} activeUserId={this.state.activeUserId} categories={this.state.categories}/> : null }
