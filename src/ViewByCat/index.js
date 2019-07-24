@@ -8,6 +8,7 @@ class ViewByCat extends React.Component {
 			query: 0,
 			catTot: 0,
 			catAvg: 0,
+			entryTot: 0,
 			queryOccured: false,
 		}
 	}
@@ -37,6 +38,7 @@ class ViewByCat extends React.Component {
 		this.setState({
 			catTot: catTot,
 			catAvg: catAvg,
+			entryTot: all.length,
 			queryOccured: true,
 		})
 	}
@@ -69,6 +71,8 @@ class ViewByCat extends React.Component {
 				<p>Category Total: {this.state.catTot.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) } </p>
 				<br/>
 				<p>Average expense amount for category: {this.state.catAvg.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 } ) }</p>
+				<br/>
+				<p>Total entries: {this.state.entryTot}</p>
 			</div>
 		)
 
