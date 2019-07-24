@@ -71,18 +71,21 @@ h2 {
 p {
 	margin-left: 30px;
 	margin-right: 6px;
+	margin-top: 40px;	
 }
 
-.formInput button {
+/*.formInput button {
 	margin: 20px;
 	min-width: 80px;
 }
-
+*/
 .logRegSwap {
 	margin: 25px;
 }
 
 button {
+	display: block;
 	border: 1px solid grey;
 	min-width: 70px;
+	margin: 0 auto;
 }

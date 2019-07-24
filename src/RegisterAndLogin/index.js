@@ -158,8 +158,11 @@ class RegisterAndLogin extends React.Component {
 						<input type='text' name='email' value={this.state.email} onChange={this.handleChange}/>
 						<p>Password:</p>
 						<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
-						<button> Log in </button>
 					</div>
+					<br/>
+					<br/>
+					<br/>
+					<button> Log in </button>
 					{this.state.message === '' ? noMessage : Message}
 				</form>
 				<p> Don't have an account? Set one up now! <br/> It's free and easy. </p>
@@ -176,8 +179,11 @@ class RegisterAndLogin extends React.Component {
 						<input type='email' name='email' value={this.state.email} onChange={this.handleChange}/>
 						<p>Password:</p>
 						<input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
-						<button>Register</button>
-					</div>					
+					</div>		
+					<br/>
+					<br/>
+					<br/>
+					<button>Register</button>
 					{this.state.message === '' ? noMessage : Message}
 				</form>
 				<div className="logRegSwap">
