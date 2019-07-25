@@ -38,7 +38,7 @@ class ViewByCat extends React.Component {
 		this.setState({
 			catTot: catTot,
 			catAvg: catAvg,
-			entryTot: all.length,
+			entryTot: queried.length,
 		})
 		if (this.state.query !== 'All') {
 			this.setState({
