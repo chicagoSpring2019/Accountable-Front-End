@@ -5,7 +5,7 @@ class EditCatModal extends React.Component {
 	constructor(props) {
 		super();
 		this.state = {
-			newCatName: undefined, 
+			newCatName: '', 
 			message: undefined,
 			showMessage: false,
 			showModal: false,
@@ -45,7 +45,7 @@ class EditCatModal extends React.Component {
 	editCategory = async (e) => {
 		e.preventDefault()
 		const catToEdit = this.props.categories[this.state.catIterator]
-		if (!this.state.newCatName) {
+		if (this.state.newCatName === '') {
 			console.log("Please enter a valid name for the category.");
 			this.setState({
 				message: "Please enter a valid name for the category.",
@@ -79,7 +79,7 @@ class EditCatModal extends React.Component {
 		console.log(catToEdit, "<<<< catToEdit")
 		try {
 			const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'category/cat/' + catToEdit._id,  {
-				method: 'POST',
+				method: 'PUT',
 				credentials: 'include',
 				body: JSON.stringify(bodyToSend),
 				headers: {
@@ -90,11 +90,11 @@ class EditCatModal extends React.Component {
 			console.log(parsedResponse)
 			this.props.retrieveExpensesAndCategories();
 			this.setState({
-				newCatName: undefined,
+				newCatName: '',
 				showMessage: false,
 			})
 			this.closeModal()
-			this.props.loadCatList();
+			this.props.retrieveExpensesAndCategories();
 		} catch(err) {
 			console.log(err);
 		}

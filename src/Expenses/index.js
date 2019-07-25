@@ -289,7 +289,7 @@ class Expenses extends React.Component {
 			<div>
 				{UpdateExpenseModal}
 				{ExpenseForm}
-				<div class="table-wrapper">
+				<div className="table-wrapper">
 					<table>
 						<thead>
 							<tr>

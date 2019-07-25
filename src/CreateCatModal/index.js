@@ -78,7 +78,7 @@ class CreateCatModal extends React.Component {
 				showMessage: false,
 			})
 			this.closeModal()
-			this.props.loadCatList();
+			this.props.retrieveExpensesAndCategories();
 		} catch(err) {
 			console.log(err);
 		}

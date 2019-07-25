@@ -4,13 +4,6 @@
 	flex-direction: column;
 }
 
-/*.expenseInfoByCat {
-	display: flex;
-	float: left;
-	margin-top: 25px;
-	background-color: yellow;
-
-}*/
 
 .ViewByCat p {
 	display: block;

@@ -123,11 +123,6 @@ class App extends React.Component {
 			this.setState({
 				queryCategory: query,
 			})
-			// const expenseResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/user/' + this.state.activeUserId + '/' + query)
-			// const parsedExpenseResponse = await expenseResponse.json();
-			// this.setState({
-			// 	expenses: parsedExpenseResponse.data
-			// })
 		} catch(err) {
 			console.log(err);
 		}
@@ -177,8 +172,8 @@ class App extends React.Component {
 					<div className="CatStuff">
 						{ this.state.logged ? <ViewByCat categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesByQuery={this.retrieveExpensesByQuery} /> : null }
 						{/*{ this.state.logged ? <SavingsSplit/> : null} */}
-						{/*{ this.state.logged ? <EditCatModal retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadCatList={this.loadCatList} activeUserId={this.state.activeUserId} categories={this.state.categories}/> : null }*/}
-						{ this.state.logged ? <CreateCatModal retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadCatList={this.loadCatList} activeUserId={this.state.activeUserId} categories={this.state.categories}/> : null }
+						{ this.state.logged ? <EditCatModal retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} activeUserId={this.state.activeUserId} categories={this.state.categories}/> : null }
+						{ this.state.logged ? <CreateCatModal retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} activeUserId={this.state.activeUserId} categories={this.state.categories}/> : null }
 		  			</div>
 		  			{ this.state.logged ? <Expenses categories={this.state.categories} expenses={this.state.expenses} activeUserId={this.state.activeUserId} queryCategory={this.state.queryCategory}
 		  			retrieveExpensesAndCategories={this.retrieveExpensesAndCategories} loadTotal={this.loadTotal}  sortDate={this.sortDate} /> : null }
