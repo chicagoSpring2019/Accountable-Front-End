@@ -88,6 +88,7 @@ class UpdateExpenseModal extends React.Component {
 				const parsedResponse = await entryResponse.json();
 				await this.props.retrieveExpensesAndCategories();
 				this.props.loadTotal()
+				this.closeModal()
 			} catch(err) {
 				console.log(err);
 			}
