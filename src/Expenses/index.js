@@ -255,7 +255,7 @@ class Expenses extends React.Component {
 					<td className="dateBox"> {cutDateSring} </td> 
 					<td> {entry.category.name} </td> 
 					<td> {float} </td> 
-					<td className="editButton"> <UpdateExpenseModal categories={this.props.categories}/>{/* <button data-id={entry._id} data-date={entry.date} data-amount={float} data-cat={entry.category.name} onClick={this.openUpdateFunction}> Edit </button> */} </td>
+					<td className="editButton"> <UpdateExpenseModal loadTotal={this.props.loadTotal} retrieveExpensesAndCategories={this.props.retrieveExpensesAndCategories} categories={this.props.categories} id={entry._id} date={fullDate} amount={float} cat={entry.category.name} />{/* <button data-id={entry._id} data-date={entry.date} data-amount={float} data-cat={entry.category.name} onClick={this.openUpdateFunction}> Edit </button> */} </td>
 					<td className="editButton"> <button data-id={entry._id} onClick={this.deleteExpense}> Delete </button> </td>
 				 </tr>
 			)

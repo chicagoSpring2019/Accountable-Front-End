@@ -6,11 +6,11 @@ class UpdateExpenseModal extends React.Component {
 		super();
 		this.state = {
 			showModal: false,
-			newName: '',
-			editAmount: 0,
-			editId: '',
-			editDate: '',
+			amount: 0,
+			id: '',
+			date: '',
 			catIterator: '0',
+			showMessage: false,
 
 		}
 	}
@@ -37,27 +37,29 @@ class UpdateExpenseModal extends React.Component {
 		this.closeModal();
 	}
 
-	setCatModalStateFunction = async (e) => {
+	showModalState = async (e) => {
 		e.preventDefault()
 		this.setState({
 			showModal: true,
 		})
+		this.openUpdateFunction();
 	}
 
 	
 	openUpdateFunction = async (e) => {
-		e.preventDefault()
-		this.setState({
-			editId: e.currentTarget.dataset.id,
-			editAmount: e.currentTarget.dataset.amount,
-			editDate: e.currentTarget.dataset.date.substring(2,10),
+		// e.preventDefault()
+		await this.setState({
+			id: this.props.id,
+			amount: this.props.amount,
+			date: this.props.date.substring(2,10),
 			category: this.props.categories[this.state.catIterator],
 		})
+		console.log(this.state, "<<<<< state and all updated stuff")
 	}
 
 	updateExpense = async (e) => {
 		e.preventDefault();
-		if (this.state.editDate.length !== 8) {
+		if (this.state.date.length !== 8) {
 			this.setState({
 				messageEdit: "Please format the date correctly (yy-mm-dd)"
 			})
@@ -67,15 +69,15 @@ class UpdateExpenseModal extends React.Component {
 				showExpenseUpdateModal: false,
 				messageEdit: '',
 			})
-			const properDate = '20'.concat(this.state.editDate)
-			const properAmount = this.state.editAmount.replace(/[,$]/g, '');
+			const properDate = '20'.concat(this.state.date)
+			const properAmount = this.state.amount.replace(/[,$]/g, '');
 			const bodyToSend = {
 				amount: properAmount,
 				date: properDate,
 				category: this.props.categories[this.state.catIterator],
 			}
 			try {
-				const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/expense/' + this.state.editId,  {
+				const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/expense/' + this.state.id,  {
 					method: 'PUT',
 					credentials: 'include',
 					body: JSON.stringify(bodyToSend),
@@ -116,25 +118,25 @@ class UpdateExpenseModal extends React.Component {
 		const noMessage = (
 			<p className="noMessage"/>
 		)
-
+ 
 		return (
 			<div className="UpdateExpenseButton">
-				<button onClick={this.setUpdateExpenseModalState}> Update !!!</button>
-				<Modal open={this.state.showExpenseUpdateModal}>
+				<button onClick={this.showModalState}> Update </button>
+				<Modal open={this.state.showModal}>
 	  				<Modal.Content>
 	  					{this.state.messageEdit === '' ? noMessage : MessageEdit}
-	    				<Form onSubmit={this.updateExpenseF}>
+	    				<Form onSubmit={this.updateExpense}>
 	      					<Label>
 	        					Update the expense:
 	      					</Label>
-	      					<Form.Input type='text' name='editDate' value={this.state.editDate.substring(0, 10)} onChange={this.handleChange}/>
+	      					<Form.Input type='text' name='date' value={this.state.date.substring(0, 10)} onChange={this.handleChange}/>
 	      					<select onChange={this.handleSelectChange}>
 								{optionsToInsert}
 							</select>
-	      					<Form.Input type='text' name='editAmount' value={this.state.editAmount} onChange={this.handleChange}/>          					
+	      					<Form.Input type='text' name='amount' value={this.state.amount} onChange={this.handleChange}/>          					
 	      					<Modal.Actions>
-	       						<Button>Update the modal</Button>
-	       						<Button onClick={this.closeModals}>Cancel</Button>
+	       						<Button>Update the Expense</Button>
+	       						<Button onClick={this.closeModal}>Cancel</Button>
 	      					</Modal.Actions>
 	    				</Form>
 	  				</Modal.Content>
