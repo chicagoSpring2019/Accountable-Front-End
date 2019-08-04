@@ -2,6 +2,8 @@ import React from 'react';
 import './index.css';
 import { Modal, Form, Button, Label, Header } from 'semantic-ui-react';
 import image from './arrows.png';
+import UpdateExpenseModal from '../UpdateExpenseModal/index'
+
 
 
 
@@ -253,7 +255,7 @@ class Expenses extends React.Component {
 					<td className="dateBox"> {cutDateSring} </td> 
 					<td> {entry.category.name} </td> 
 					<td> {float} </td> 
-					<td className="editButton"> <button data-id={entry._id} data-date={entry.date} data-amount={float} data-cat={entry.category.name} onClick={this.openUpdateFunction}> Edit </button> </td>
+					<td className="editButton"> <UpdateExpenseModal categories={this.props.categories}/>{/* <button data-id={entry._id} data-date={entry.date} data-amount={float} data-cat={entry.category.name} onClick={this.openUpdateFunction}> Edit </button> */} </td>
 					<td className="editButton"> <button data-id={entry._id} onClick={this.deleteExpense}> Delete </button> </td>
 				 </tr>
 			)

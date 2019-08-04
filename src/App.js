@@ -7,6 +7,7 @@ import ViewByCat from './ViewByCat/index'
 import SavingsSplit from './SavingsSplit/index'
 import CreateCatModal from './CreateCatModal/index'
 import EditCatModal from './EditCatModal/index'
+// import UpdateExpenseModal from './UpdateExpenseModal/index'
 
 
 class App extends React.Component {

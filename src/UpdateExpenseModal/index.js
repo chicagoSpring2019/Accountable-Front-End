@@ -1,13 +1,49 @@
 import React from 'react';
-import { Button, Modal, Form } from 'semantic-ui-react';
+import { Button, Modal, Form, Label } from 'semantic-ui-react';
 
 class UpdateExpenseModal extends React.Component {
 	constructor(props) {
 		super();
 		this.state = {
+			showModal: false,
+			newName: '',
+			editAmount: 0,
+			editId: '',
+			editDate: '',
+			catIterator: '0',
 
 		}
 	}
+
+	handleChange = (e) => {
+		this.setState({[e.target.name]: e.target.value});
+	}
+
+	handleSelectChange = async (e) => {
+		this.setState({
+			catIterator: e.target.value,
+		});
+	}
+
+	closeModal = () => {
+		this.setState({
+			showModal: false,
+		})
+	}
+
+	hideMessage = (e) => {
+		e.preventDefault();
+		this.setState({showMessage: false});
+		this.closeModal();
+	}
+
+	setCatModalStateFunction = async (e) => {
+		e.preventDefault()
+		this.setState({
+			showModal: true,
+		})
+	}
+
 	
 	openUpdateFunction = async (e) => {
 		e.preventDefault()
@@ -16,18 +52,16 @@ class UpdateExpenseModal extends React.Component {
 			editAmount: e.currentTarget.dataset.amount,
 			editDate: e.currentTarget.dataset.date.substring(2,10),
 			category: this.props.categories[this.state.catIterator],
-			showExpenseUpdateModal: true,
 		})
 	}
 
-	updateExpenseF = async (e) => {
+	updateExpense = async (e) => {
 		e.preventDefault();
 		if (this.state.editDate.length !== 8) {
 			this.setState({
 				messageEdit: "Please format the date correctly (yy-mm-dd)"
 			})
 		} else {
-
 			console.log("--Expense update has been initiated--");
 			this.setState({
 				showExpenseUpdateModal: false,
@@ -84,36 +118,31 @@ class UpdateExpenseModal extends React.Component {
 		)
 
 		return (
-			<Modal open={this.state.showExpenseUpdateModal}>
-  				<Modal.Content>
-  					{this.state.messageEdit === '' ? noMessage : MessageEdit}
-    				<Form onSubmit={this.updateExpenseF}>
-      					<Label>
-        					Update the expense:
-      					</Label>
-      					<Form.Input type='text' name='editDate' value={this.state.editDate.substring(0, 10)} onChange={this.handleChange}/>
-      					<select onChange={this.handleSelectChange}>
-							{optionsToInsert}
-						</select>
-      					<Form.Input type='text' name='editAmount' value={this.state.editAmount} onChange={this.handleChange}/>          					
-      					<Modal.Actions>
-       						<Button>Update the modal</Button>
-       						<Button onClick={this.closeModals}>Cancel</Button>
-      					</Modal.Actions>
-    				</Form>
-  				</Modal.Content>
-			</Modal>
+			<div className="UpdateExpenseButton">
+				<button onClick={this.setUpdateExpenseModalState}> Update !!!</button>
+				<Modal open={this.state.showExpenseUpdateModal}>
+	  				<Modal.Content>
+	  					{this.state.messageEdit === '' ? noMessage : MessageEdit}
+	    				<Form onSubmit={this.updateExpenseF}>
+	      					<Label>
+	        					Update the expense:
+	      					</Label>
+	      					<Form.Input type='text' name='editDate' value={this.state.editDate.substring(0, 10)} onChange={this.handleChange}/>
+	      					<select onChange={this.handleSelectChange}>
+								{optionsToInsert}
+							</select>
+	      					<Form.Input type='text' name='editAmount' value={this.state.editAmount} onChange={this.handleChange}/>          					
+	      					<Modal.Actions>
+	       						<Button>Update the modal</Button>
+	       						<Button onClick={this.closeModals}>Cancel</Button>
+	      					</Modal.Actions>
+	    				</Form>
+	  				</Modal.Content>
+				</Modal>
+			</div>
 			
 		)
 	}
 }
 
 export default UpdateExpenseModal
-
-
-
-
-
-
-
-}
