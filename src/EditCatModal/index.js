@@ -42,6 +42,42 @@ class EditCatModal extends React.Component {
 		})
 	}
 
+	deleteCat = async (e) => {
+		e.preventDefault()
+		const catToDel = this.props.categories[this.state.catIterator]
+		console.log(catToDel)
+		for(let i = 0; i < this.props.expenses.length; i++ ) {
+			console.log(this.props.expenses[i].category._id)
+			if (catToDel._id === this.props.expenses[i].category._id) {
+				console.log("This category is still attached to one or more expenses. Alter them to delete the category.");
+				this.setState({
+					showMessage: true,
+					message: "This category is still attached to one or more expenses. Alter them to delete the category."
+				})
+			} else {
+				// try {
+				// 	const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'category/cat/' + catToDel._id,  {
+				// 		method: 'DELETE',
+				// 		credentials: 'include',
+				// 		headers: {
+				// 			'Content-Type': 'application/json'
+				// 		}
+				// 	})
+				// 	const parsedResponse = await entryResponse.json();
+				// 	console.log(parsedResponse)
+				// 	this.setState({
+				// 		newCatName: '',
+				// 		showMessage: false,
+				// 	})
+				// 	this.closeModal()
+				// 	this.props.retrieveExpensesAndCategories();
+				// } catch(err) {
+				// 	console.log(err);
+				// }
+			}
+		}
+	}
+
 	editCategory = async (e) => {
 		e.preventDefault()
 		const catToEdit = this.props.categories[this.state.catIterator]
@@ -88,7 +124,6 @@ class EditCatModal extends React.Component {
 			})
 			const parsedResponse = await entryResponse.json();
 			console.log(parsedResponse)
-			this.props.retrieveExpensesAndCategories();
 			this.setState({
 				newCatName: '',
 				showMessage: false,
@@ -127,10 +162,11 @@ class EditCatModal extends React.Component {
 	        				<select onChange={this.handleSelectChange}>
 								{optionsToInsert}
 							</select>
-	          				<Form.Input type='text' name='newCatName' value={this.state.newCatName} onChange={this.handleChange}/>
+	          				<Form.Input type='text' name='newCatName' placeholder="New category title" value={this.state.newCatName} onChange={this.handleChange}/>
 	          				{noMessage}
 	          				<Modal.Actions>
 	           					<Button>Update the Category</Button>
+	           					<Button onClick={this.deleteCat}>Delete</Button>
 	           					<Button onClick={this.hideMessage}>Cancel</Button>
 	          				</Modal.Actions>
         				</Form>
