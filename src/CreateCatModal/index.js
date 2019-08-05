@@ -28,7 +28,7 @@ class CreateCatModal extends React.Component {
 		this.closeModal();
 	}
 
-	setCatModalStateFunction = async (e) => {
+	setCatModalState = async (e) => {
 		e.preventDefault()
 		this.setState({
 			showModal: true,
@@ -84,6 +84,12 @@ class CreateCatModal extends React.Component {
 		}
 	}
 
+
+
+
+
+	
+
 	render() {
 
 		const Message = (
@@ -96,7 +102,7 @@ class CreateCatModal extends React.Component {
 
 		return (
 			<div className="CreateCatButton">
-				<button onClick={this.setCatModalStateFunction} > Create new Category </button>
+				<button onClick={this.setCatModalState} > Create new Category </button>
 				<Modal open={this.state.showModal}>
       				<Modal.Header>Create a new category</Modal.Header>
       				<Modal.Content>

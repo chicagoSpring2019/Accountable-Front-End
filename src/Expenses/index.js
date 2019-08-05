@@ -14,14 +14,7 @@ class Expenses extends React.Component {
 			catIterator: '0',
 			date: '',
 			amount: '',
-			//newName: '',
-			//showExpenseUpdateModal: false,
-			//editAmount: 0,
-			//editDate: '',
-			//editId: '',
-			expenseTot: 0,
-			messageNew: '',
-			messageEdit: '',
+			Message: '',
 			expenses: [],
 			amountSortMode: 'unsorted',
 
@@ -42,12 +35,6 @@ class Expenses extends React.Component {
 		})
 	}
 
-	// closeModals = () => {
-	// 	this.setState({
-	// 		showExpenseUpdateModal: false,
-	// 	})
-	// }
-
 	deleteExpense = async (e) => {
 		try {
 			const deleteResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/expense/' + e.currentTarget.dataset.id, {
@@ -67,11 +54,11 @@ class Expenses extends React.Component {
 		e.preventDefault()
 		if (this.state.date.length !== 8) {
 			this.setState({
-				messageNew: "Please format the date correctly (yy-mm-dd)"
+				Message: "Please format the date correctly (yy-mm-dd)"
 			})
 		} else {
 			this.setState({
-				messageNew: ''
+				Message: ''
 			})
 			const properDate = '20'.concat(this.state.date)
 			console.log(this.state.date, properDate)
@@ -100,21 +87,6 @@ class Expenses extends React.Component {
 			}
 		}
 	}
-
-
-	// openUpdateFunction = async (e) => {
-	// 	e.preventDefault()
-	// 	this.setState({
-	// 		editId: e.currentTarget.dataset.id,
-	// 		editAmount: e.currentTarget.dataset.amount,
-	// 		editDate: e.currentTarget.dataset.date.substring(2,10),
-	// 		category: this.props.categories[this.state.catIterator],
-	// 		showExpenseUpdateModal: true,
-	// 	})
-	// }
-
-
-	
 
 
 	sortAmount = async () => {
@@ -147,50 +119,6 @@ class Expenses extends React.Component {
 
 
 
-	// updateExpenseF = async (e) => {
-	// 	e.preventDefault();
-	// 	if (this.state.editDate.length !== 8) {
-	// 		this.setState({
-	// 			messageEdit: "Please format the date correctly (yy-mm-dd)"
-	// 		})
-	// 	} else {
-
-	// 		console.log("--Expense update has been initiated--");
-	// 		this.setState({
-	// 			showExpenseUpdateModal: false,
-	// 			messageEdit: '',
-	// 		})
-	// 		const properDate = '20'.concat(this.state.editDate)
-	// 		const properAmount = this.state.editAmount.replace(/[,$]/g, '');
-	// 		const bodyToSend = {
-	// 			amount: properAmount,
-	// 			date: properDate,
-	// 			category: this.props.categories[this.state.catIterator],
-	// 		}
-	// 		try {
-	// 			const entryResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'expense/expense/' + this.state.editId,  {
-	// 				method: 'PUT',
-	// 				credentials: 'include',
-	// 				body: JSON.stringify(bodyToSend),
-	// 				headers: {
-	// 					'Content-Type': 'application/json'
-	// 				}
-	// 			})
-	// 			const parsedResponse = await entryResponse.json();
-	// 			await this.props.retrieveExpensesAndCategories();
-	// 			this.props.loadTotal()
-	// 		} catch(err) {
-	// 			console.log(err);
-	// 		}
-	// 	}
-	// }
-
-
-
-
-
-
-
 
 
 
@@ -205,15 +133,9 @@ class Expenses extends React.Component {
 			)
 		})
 
-		const MessageNew = (
+		const Message = (
 			<p className="message">
-				{this.state.messageNew}
-			</p>
-		)
-
-		const MessageEdit = (
-			<p className="message">
-				{this.state.messageEdit}
+				{this.state.Message}
 			</p>
 		)
 
@@ -223,7 +145,7 @@ class Expenses extends React.Component {
 
 		const ExpenseForm = (
 			<div>
-				{this.state.messageNew === '' ? noMessage : MessageNew}
+				{this.state.Message === '' ? noMessage : Message}
 				<form id="expense-form" onSubmit={this.createExpense}>
 					Date:
 					<input type='text' name='date' value={this.state.date} placeholder='yy-mm-dd' onChange={this.handleChange}/>
@@ -262,34 +184,8 @@ class Expenses extends React.Component {
 			}
 		})
 
-
-		// const UpdateExpenseModal = (
-
-		// 	<Modal open={this.state.showExpenseUpdateModal}>
-  // 				<Modal.Content>
-  // 					{this.state.messageEdit === '' ? noMessage : MessageEdit}
-  //   				<Form onSubmit={this.updateExpenseF}>
-  //     					<Label>
-  //       					Update the expense:
-  //     					</Label>
-  //     					<Form.Input type='text' name='editDate' value={this.state.editDate.substring(0, 10)} onChange={this.handleChange}/>
-  //     					<select onChange={this.handleSelectChange}>
-		// 					{optionsToInsert}
-		// 				</select>
-  //     					<Form.Input type='text' name='editAmount' value={this.state.editAmount} onChange={this.handleChange}/>          					
-  //     					<Modal.Actions>
-  //      						<Button>Update the modal</Button>
-  //      						<Button onClick={this.closeModals}>Cancel</Button>
-  //     					</Modal.Actions>
-  //   				</Form>
-  // 				</Modal.Content>
-		// 	</Modal>
-			
-		// )
-
 		return (
 			<div>
-				{/* {UpdateExpenseModal} */}
 				{ExpenseForm}
 				<div className="table-wrapper">
 					<table>

@@ -11,7 +11,7 @@ class UpdateExpenseModal extends React.Component {
 			date: '',
 			catIterator: '0',
 			showMessage: false,
-
+			message: '',
 		}
 	}
 
@@ -29,6 +29,7 @@ class UpdateExpenseModal extends React.Component {
 		this.setState({
 			showModal: false,
 		})
+		this.hideMessage();
 	}
 
 	hideMessage = (e) => {
@@ -37,37 +38,28 @@ class UpdateExpenseModal extends React.Component {
 		this.closeModal();
 	}
 
-	showModalState = async (e) => {
+	showModalSetState = (e) => {
 		e.preventDefault()
 		this.setState({
 			showModal: true,
-		})
-		this.openUpdateFunction();
-	}
-
-	
-	openUpdateFunction = async (e) => {
-		// e.preventDefault()
-		await this.setState({
 			id: this.props.id,
 			amount: this.props.amount,
 			date: this.props.date.substring(2,10),
 			category: this.props.categories[this.state.catIterator],
 		})
-		console.log(this.state, "<<<<< state and all updated stuff")
 	}
 
 	updateExpense = async (e) => {
 		e.preventDefault();
 		if (this.state.date.length !== 8) {
 			this.setState({
-				messageEdit: "Please format the date correctly (yy-mm-dd)"
+				message: "Please format the date correctly (yy-mm-dd)"
 			})
 		} else {
 			console.log("--Expense update has been initiated--");
 			this.setState({
-				showExpenseUpdateModal: false,
-				messageEdit: '',
+				showModal: false,
+				message: '',
 			})
 			const properDate = '20'.concat(this.state.date)
 			const properAmount = this.state.amount.replace(/[,$]/g, '');
@@ -87,13 +79,15 @@ class UpdateExpenseModal extends React.Component {
 				})
 				const parsedResponse = await entryResponse.json();
 				await this.props.retrieveExpensesAndCategories();
-				this.props.loadTotal()
 				this.closeModal()
+				this.props.loadTotal()
 			} catch(err) {
 				console.log(err);
 			}
 		}
 	}
+
+
 
 
 
@@ -104,15 +98,9 @@ class UpdateExpenseModal extends React.Component {
 			)
 		})
 
-		const MessageNew = (
+		const Message = (
 			<p className="message">
-				{this.state.messageNew}
-			</p>
-		)
-
-		const MessageEdit = (
-			<p className="message">
-				{this.state.messageEdit}
+				{this.state.Message}
 			</p>
 		)
 
@@ -122,10 +110,10 @@ class UpdateExpenseModal extends React.Component {
  
 		return (
 			<div className="UpdateExpenseButton">
-				<button onClick={this.showModalState}> Update </button>
+				<button onClick={this.showModalSetState}> Update </button>
 				<Modal open={this.state.showModal}>
 	  				<Modal.Content>
-	  					{this.state.messageEdit === '' ? noMessage : MessageEdit}
+	  					{this.state.Message === '' ? noMessage : Message}
 	    				<Form onSubmit={this.updateExpense}>
 	      					<Label>
 	        					Update the expense:
