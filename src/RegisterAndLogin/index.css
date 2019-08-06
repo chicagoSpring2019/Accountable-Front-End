@@ -96,7 +96,12 @@ p {
 
 button {
 	display: block;
-	border: 1px solid grey;
 	min-width: 70px;
 	margin: 0 auto;
+	background:  #99e6e6;
+	color: white;
+	border-radius: 7px;
+	padding: 5px;
+	font-weight: bold;
+
 }
