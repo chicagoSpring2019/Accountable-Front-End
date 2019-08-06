@@ -14,7 +14,19 @@ input {
 }
 
 .logReg {
-	margin-top: 30px;
+	width: 70%;
+	position: relative;
+	top: -120px;
+	margin: 0 auto;
+	background-color: white;
+	box-shadow: 0 8px 20px 0 grey;
+	padding-bottom: 40px;
+	border-radius: 20px;
+
+}
+
+.logReg h3 {
+	padding-top: 40px;
 }
 
 .formInput {
@@ -70,7 +82,7 @@ h2 {
 p {
 	margin-left: 30px;
 	margin-right: 6px;
-	margin-top: 40px;	
+	margin-top: 20px;	
 }
 
 /*.formInput button {
