@@ -94,7 +94,7 @@ p {
 	margin: 25px;
 }
 
-.loginReg button {
+.logReg form button, .logReg button {
 	display: block;
 	min-width: 70px;
 	margin: 0 auto;
