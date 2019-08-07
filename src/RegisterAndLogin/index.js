@@ -47,6 +47,9 @@ class RegisterAndLogin extends React.Component {
 				message: "You must input an email and password to login"
 			})
 		} else {
+			this.setState({
+				message: "Logging in..."
+			})
 			try {
 				const bodyToSend = {
 					email: this.state.email,

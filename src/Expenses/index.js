@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import { Modal, Form, Button, Label, Header } from 'semantic-ui-react';
+import { Modal, Form, Button, Label, Header, Tab } from 'semantic-ui-react';
 import image from './arrows.png';
 import UpdateExpenseModal from '../UpdateExpenseModal/index'
 
@@ -120,12 +120,6 @@ class Expenses extends React.Component {
 
 
 
-
-
-
-
-
-
 	render() {
 		const optionsToInsert = this.props.categories.map((op, i) => {
 			return (
@@ -162,6 +156,8 @@ class Expenses extends React.Component {
 				</form>
 			</div>
 		)
+
+		
 
 		const ExpenseLog = this.props.expenses.map((entry) => {
 			const fullDate = entry.date;
