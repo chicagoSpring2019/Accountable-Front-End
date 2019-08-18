@@ -8,7 +8,10 @@ class RegisterAndLogin extends React.Component {
 			email: '',
 			password: '',
 			showRegister: false,
-			message: '',		}
+			message: '',
+			loadingCounter: 1,
+			messageText: '',		
+		}
 	}
 
 	handleChange = (e) => {
@@ -39,6 +42,23 @@ class RegisterAndLogin extends React.Component {
 		})
 	}
 
+	loadingPeriods = () => {
+		if (this.state.loadingCounter === 6) {
+			this.setState({
+				loadingCounter: 1
+			})
+		}
+		let dots = ".".repeat(this.state.loadingCounter);
+		let message = this.state.messageText;
+		let messageToSet = message + dots;
+		let counter = this.state.loadingCounter;
+		counter++
+		this.setState({
+			message: messageToSet,
+			loadingCounter: counter,
+		})
+	}
+
 	handleLogin = async (e) => {
 		e.preventDefault();
 		console.log('--handleLogin() initiated--');
@@ -47,9 +67,10 @@ class RegisterAndLogin extends React.Component {
 				message: "You must input an email and password to login"
 			})
 		} else {
-			this.setState({
-				message: "Logging in..."
+			await this.setState({
+				messageText: "Logging in"
 			})
+			setInterval(this.loadingPeriods, 200)
 			try {
 				const bodyToSend = {
 					email: this.state.email,
@@ -67,9 +88,6 @@ class RegisterAndLogin extends React.Component {
 			  	this.clearForm();
 			  	const parsedResponse = await loginResponse.json();
 			  	if (parsedResponse.status === 200) {
-					this.setState({
-						message: "Logging in...",
-					})
 					await this.props.setActiveUser(parsedResponse.data.email, parsedResponse.data._id);
 				} else if (parsedResponse.status === 404) {
 					this.setState({
@@ -88,8 +106,9 @@ class RegisterAndLogin extends React.Component {
 		if (this.state.password.length >= 6) {
 			try {
 				await this.setState({
-					message: "Creating account...",
+					messageText: "Creating account...",
 				})
+				setInterval(this.loadingPeriods, 200)
 				const registerResponse = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/register',  {
 					method: 'POST',
 					credentials: 'include',
@@ -188,6 +207,7 @@ class RegisterAndLogin extends React.Component {
 					<br/>
 					<button>Register</button>
 					{this.state.message === '' ? noMessage : Message}
+					<br/>
 				</form>
 				<div className="logRegSwap">
 					<p> You have an account after all? </p>

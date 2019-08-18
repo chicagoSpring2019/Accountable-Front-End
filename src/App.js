@@ -7,6 +7,7 @@ import ViewByCat from './ViewByCat/index'
 import SavingsSplit from './SavingsSplit/index'
 import CreateCatModal from './CreateCatModal/index'
 import EditCatModal from './EditCatModal/index'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 
 class App extends React.Component {
@@ -168,7 +169,7 @@ class App extends React.Component {
 				<div className="main">
 		  			{ this.state.logged ? <h1 id='bar'>  Accountable  </h1> : null }
 					{ this.state.logged ? LogOut : <RegisterAndLogin setActiveUser={this.setActiveUser} /> }
-					{ this.state.logged ? <DataManip expenseTot={this.state.expenseTot} categories={this.state.categories} expenses={this.state.expenses} /> : null }
+					{ this.state.logged && <DataManip expenseTot={this.state.expenseTot} categories={this.state.categories} expenses={this.state.expenses} /> }
 					<div className="CatStuff">
 						{ this.state.logged ? <ViewByCat categories={this.state.categories} expenses={this.state.expenses} retrieveExpensesByQuery={this.retrieveExpensesByQuery} /> : null }
 						{/*{ this.state.logged ? <SavingsSplit/> : null} */}

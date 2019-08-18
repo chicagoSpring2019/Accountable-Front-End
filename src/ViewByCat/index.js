@@ -1,5 +1,7 @@
 import React from 'react';
 import './index.css';
+let kitty = "I am a kitty"
+
 
 class ViewByCat extends React.Component {
 	constructor(){
@@ -84,8 +86,9 @@ class ViewByCat extends React.Component {
 			</div>
 		)
 
-
-
+ 	 console.log("before: ", kitty)
+ 	 kitty = "dog"
+	 console.log("after: ", kitty)
 		return (
 			<div className="ViewByCat">
 				{selector}
@@ -95,6 +98,7 @@ class ViewByCat extends React.Component {
 				</div>
 			</div>
 		);
+		
 	}
 }
 
